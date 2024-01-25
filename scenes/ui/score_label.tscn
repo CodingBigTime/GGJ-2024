@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2egw5fjoaau4"]
+
+[ext_resource type="Script" path="res://scenes/ui/score_label.gd" id="1_c6dxj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2kjox"]
+font_size = 48
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[node name="ScoreLabel" type="Label"]
+size_flags_vertical = 1
+text = "Score: 123"
+label_settings = SubResource("LabelSettings_2kjox")
+horizontal_alignment = 2
+vertical_alignment = 2
+script = ExtResource("1_c6dxj")

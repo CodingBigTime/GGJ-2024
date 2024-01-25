@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://gk4h02yf37ek"]
+
+[ext_resource type="Texture2D" uid="uid://cjd0hhu1q6fbr" path="res://assets/ui/bar_under.png" id="1_iqmtf"]
+[ext_resource type="Texture2D" uid="uid://b0pkpdwvercf1" path="res://assets/ui/bar_over.png" id="2_ola6e"]
+[ext_resource type="Texture2D" uid="uid://lxn8htt6uq7w" path="res://assets/ui/bar_center.png" id="3_nso2p"]
+[ext_resource type="Script" path="res://scenes/ui/boost_bar.gd" id="4_pt60u"]
+
+[node name="BoostBar" type="TextureProgressBar"]
+anchors_preset = -1
+anchor_right = 0.126
+anchor_bottom = 0.013
+offset_right = -241.92
+offset_bottom = -14.04
+max_value = 20.0
+texture_under = ExtResource("1_iqmtf")
+texture_over = ExtResource("2_ola6e")
+texture_progress = ExtResource("3_nso2p")
+script = ExtResource("4_pt60u")
+metadata/_edit_horizontal_guides_ = [14.0, -4.0]
+metadata/_edit_vertical_guides_ = [241.0]

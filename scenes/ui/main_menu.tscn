@@ -1,0 +1,121 @@
+[gd_scene load_steps=17 format=3 uid="uid://0cy7htlt00s6"]
+
+[ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="1_sdmyu"]
+[ext_resource type="Texture2D" uid="uid://cyrlccn34qbgx" path="res://assets/ui/background.png" id="2_aa2d2"]
+[ext_resource type="Texture2D" uid="uid://cvaryjoqyns3q" path="res://assets/ui/buttons/start_button_normal.png" id="3_f7byy"]
+[ext_resource type="Texture2D" uid="uid://bb44lytpdej88" path="res://assets/ui/buttons/start_button_pressed.png" id="4_tpkhw"]
+[ext_resource type="Texture2D" uid="uid://d1omto5uuatjl" path="res://assets/ui/buttons/start_button_hover.png" id="5_44btw"]
+[ext_resource type="Texture2D" uid="uid://c0ja4br2myjm1" path="res://assets/ui/buttons/exit_button_normal.png" id="6_rr77v"]
+[ext_resource type="Texture2D" uid="uid://devt8qijam78x" path="res://assets/ui/buttons/exit_button_pressed.png" id="7_igl8u"]
+[ext_resource type="Texture2D" uid="uid://dy5y5l14xceox" path="res://assets/ui/buttons/exit_button_hover.png" id="8_3rgo3"]
+[ext_resource type="Script" path="res://scenes/ui/best_score_label.gd" id="9_i60lb"]
+[ext_resource type="Script" path="res://scenes/ui/reset_score_button.gd" id="10_lj26a"]
+[ext_resource type="AudioStream" uid="uid://bm6bcuvl2fmgq" path="res://assets/sfx/button_press.wav" id="10_nue65"]
+[ext_resource type="AudioStream" uid="uid://clj6pfdgfrud7" path="res://assets/sfx/button_release.wav" id="11_gbt1v"]
+[ext_resource type="Texture2D" uid="uid://dpxcecahn7c8q" path="res://assets/ui/game_over.png" id="11_odnwc"]
+[ext_resource type="Script" path="res://scenes/ui/game_over.gd" id="12_toh3p"]
+[ext_resource type="Texture2D" uid="uid://bf3oy3fvpyekj" path="res://assets/ui/place_holder.png" id="13_ul7vp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_f8bl0"]
+font_size = 32
+
+[node name="Control" type="Control"]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+scale = Vector2(0.998055, 1)
+script = ExtResource("1_sdmyu")
+game_scene = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 1
+texture = ExtResource("2_aa2d2")
+
+[node name="HomeMenu" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_right = 80
+
+[node name="HSplitContainer" type="HSplitContainer" parent="HomeMenu"]
+layout_mode = 2
+collapsed = true
+dragger_visibility = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HomeMenu/HSplitContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HomeMenu/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="StartButton" type="TextureButton" parent="HomeMenu/HSplitContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_f7byy")
+texture_pressed = ExtResource("4_tpkhw")
+texture_hover = ExtResource("5_44btw")
+
+[node name="ExitButton" type="TextureButton" parent="HomeMenu/HSplitContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("6_rr77v")
+texture_pressed = ExtResource("7_igl8u")
+texture_hover = ExtResource("8_3rgo3")
+
+[node name="EventLabel" type="Label" parent="HomeMenu/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+text = "CBT Godot Template"
+
+[node name="BestScoreLabel" type="Label" parent="HomeMenu/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_f8bl0")
+script = ExtResource("9_i60lb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HomeMenu/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="reset_score_button" type="Button" parent="HomeMenu/HSplitContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "RESET SCORE"
+script = ExtResource("10_lj26a")
+
+[node name="CenterContainer" type="CenterContainer" parent="HomeMenu/HSplitContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HomeMenu/HSplitContainer/CenterContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="game_over" type="TextureRect" parent="HomeMenu/HSplitContainer/CenterContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+texture = ExtResource("11_odnwc")
+stretch_mode = 5
+script = ExtResource("12_toh3p")
+
+[node name="logo" type="TextureRect" parent="HomeMenu/HSplitContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(700, 500)
+layout_mode = 2
+texture = ExtResource("13_ul7vp")
+stretch_mode = 5
+
+[node name="ButtonDownSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_nue65")
+
+[node name="ButtonUpSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_gbt1v")
+
+[connection signal="button_down" from="HomeMenu/HSplitContainer/VBoxContainer/VBoxContainer/StartButton" to="." method="_on_button_down"]
+[connection signal="button_up" from="HomeMenu/HSplitContainer/VBoxContainer/VBoxContainer/StartButton" to="." method="_on_button_up"]
+[connection signal="pressed" from="HomeMenu/HSplitContainer/VBoxContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="button_down" from="HomeMenu/HSplitContainer/VBoxContainer/VBoxContainer/ExitButton" to="." method="_on_button_down"]
+[connection signal="button_up" from="HomeMenu/HSplitContainer/VBoxContainer/VBoxContainer/ExitButton" to="." method="_on_button_up"]
+[connection signal="pressed" from="HomeMenu/HSplitContainer/VBoxContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="HomeMenu/HSplitContainer/VBoxContainer/HBoxContainer/reset_score_button" to="HomeMenu/HSplitContainer/VBoxContainer/HBoxContainer/reset_score_button" method="_on_pressed"]
