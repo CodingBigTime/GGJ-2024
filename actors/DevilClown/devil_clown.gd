@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 signal died
+signal position_signal(position: Vector3)
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -18,6 +19,7 @@ var texture_right_down = load("res://assets/sprites/clown/clown_down_right.png")
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _physics_process(delta):
+	position_signal.emit(position)
 	if Input.is_action_just_pressed("menu"):
 		died.emit()
 

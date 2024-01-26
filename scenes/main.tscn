@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkeoa3pkcfgbc"]
+[gd_scene load_steps=8 format=3 uid="uid://cutufnxtwvh8g"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_qr7om"]
 [ext_resource type="Script" path="res://scenes/cameras/camera_3d_orthogonal_follow.gd" id="2_hrcrx"]
 [ext_resource type="PackedScene" uid="uid://3630s2wnw678" path="res://assets/models/pingu/pingu.gltf" id="2_qb03g"]
 [ext_resource type="Texture2D" uid="uid://dq12x7vt5ci6s" path="res://assets/surface/ground.png" id="3_onrk0"]
 [ext_resource type="PackedScene" uid="uid://lhi1oicjack5" path="res://actors/DevilClown/devil_clown.tscn" id="4_l66fv"]
+[ext_resource type="Script" path="res://scenes/VillagerFactory.gd" id="6_mfuef"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l082c"]
 albedo_texture = ExtResource("3_onrk0")
@@ -32,3 +33,11 @@ transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0
 
 [node name="DevilClown" parent="." instance=ExtResource("4_l66fv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="VillagerFactory" type="Node3D" parent="."]
+script = ExtResource("6_mfuef")
+
+[node name="Timer" type="Timer" parent="VillagerFactory"]
+
+[connection signal="position_signal" from="DevilClown" to="VillagerFactory" method="_on_devil_clown_position_signal"]
+[connection signal="timeout" from="VillagerFactory/Timer" to="VillagerFactory" method="_on_timer_timeout"]
