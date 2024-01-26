@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dg1vclhddqwgx"]
+
+[ext_resource type="Script" path="res://objects/water_balloon.gd" id="1_2k1ia"]
+[ext_resource type="Texture2D" uid="uid://ch1urjux36k1l" path="res://assets/sprites/eye.png" id="1_h2k3b"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_v5sap"]
+radius = 0.15
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bglvj"]
+radius = 0.2
+
+[node name="WaterBalloon" type="RigidBody3D"]
+disable_mode = 2
+script = ExtResource("1_2k1ia")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_v5sap")
+disabled = true
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+billboard = 1
+double_sided = false
+texture_filter = 0
+texture = ExtResource("1_h2k3b")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_bglvj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
