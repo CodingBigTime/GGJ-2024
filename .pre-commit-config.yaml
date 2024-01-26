@@ -12,7 +12,7 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/Scony/godot-gdscript-toolkit
-    rev: "4.1.0"
+    rev: "4.2.2"
     hooks:
       - id: gdlint
       - id: gdformat
