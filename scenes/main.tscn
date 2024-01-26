@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://bkeoa3pkcfgbc"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_qr7om"]
+[ext_resource type="Script" path="res://scenes/cameras/camera_3d_orthogonal_follow.gd" id="2_hrcrx"]
+[ext_resource type="PackedScene" uid="uid://3630s2wnw678" path="res://assets/models/pingu/pingu.gltf" id="2_qb03g"]
+[ext_resource type="Texture2D" uid="uid://dq12x7vt5ci6s" path="res://assets/surface/ground.png" id="3_onrk0"]
+[ext_resource type="PackedScene" uid="uid://lhi1oicjack5" path="res://actors/DevilClown/devil_clown.tscn" id="4_l66fv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l082c"]
+albedo_texture = ExtResource("3_onrk0")
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_qr7om")
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("follow_target")]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
+projection = 1
+size = 15.0
+script = ExtResource("2_hrcrx")
+follow_target = NodePath("../DevilClown")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+material_override = SubResource("StandardMaterial3D_l082c")
+use_collision = true
+size = Vector3(1000, 1, 1000)
+
+[node name="blockbench_export" parent="." instance=ExtResource("2_qb03g")]
+transform = Transform3D(-1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, -1, -4, 0.5, -5)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 20, 0)
+
+[node name="DevilClown" parent="." instance=ExtResource("4_l66fv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

@@ -27,7 +27,6 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 scale = Vector2(0.998055, 1)
 script = ExtResource("1_sdmyu")
-game_scene = 2
 
 [node name="TextureRect" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(1920, 1080)
