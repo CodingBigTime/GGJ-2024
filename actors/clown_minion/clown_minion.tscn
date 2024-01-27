@@ -47,6 +47,6 @@ shape = SubResource("SphereShape3D_ln3f2")
 shape = SubResource("SphereShape3D_hs8oc")
 
 [connection signal="timeout" from="LifetimeTimer" to="." method="_on_lifetime_timer_timeout"]
-[connection signal="body_entered" from="DetectionArea3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="DetectionArea3D" to="." method="_on_detection_area_3d_body_entered"]
+[connection signal="body_entered" from="DetectionArea3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="ConvertArea3D" to="." method="_on_convert_area_3d_body_entered"]

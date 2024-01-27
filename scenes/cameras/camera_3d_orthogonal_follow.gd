@@ -9,5 +9,5 @@ func _ready():
 	position = follow_target.position + offset
 
 
-func _process(_delta: float):
+func _process(delta: float):
 	position = lerp(position, follow_target.position + offset, lerp_weight * delta)

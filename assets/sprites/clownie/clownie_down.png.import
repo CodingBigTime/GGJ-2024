@@ -3,26 +3,25 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://molqs5x1geog"
-path.s3tc="res://.godot/imported/clownie_down.png-de5d2317dfcafe59d129588f3698b5d8.s3tc.ctex"
+path="res://.godot/imported/clownie_down.png-de5d2317dfcafe59d129588f3698b5d8.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://assets/sprites/clownie/clownie_down.png"
-dest_files=["res://.godot/imported/clownie_down.png-de5d2317dfcafe59d129588f3698b5d8.s3tc.ctex"]
+dest_files=["res://.godot/imported/clownie_down.png-de5d2317dfcafe59d129588f3698b5d8.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
