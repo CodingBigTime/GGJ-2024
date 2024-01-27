@@ -4,6 +4,7 @@ extends Node3D
 func _ready():
 	$DevilClown.died.connect(self._go_to_main_menu)
 	$DevilClown.throw_water_balloon.connect(self._on_player_throw_water_balloon)
+	$DevilClown.hit_cymbals.connect(self._on_cymbals_hit)
 
 
 func _go_to_main_menu():
@@ -11,7 +12,15 @@ func _go_to_main_menu():
 
 
 func _on_water_balloon_explode(explosion_area: Area3D):
+	if GlobalState.debug:
+		add_child(explosion_area)
 	print("Water balloon explode: ", explosion_area.position)
+
+
+func _on_cymbals_hit(cymbal_area: Area3D):
+	if GlobalState.debug:
+		add_child(cymbal_area)
+	print("Cymbals hit: ", cymbal_area.position)
 
 
 func _on_player_throw_water_balloon(
