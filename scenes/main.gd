@@ -10,8 +10,8 @@ func _go_to_main_menu():
 	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
 
 
-func _on_water_balloon_explode(explode_position: Vector2):
-	print("Water balloon explode: ", explode_position)
+func _on_water_balloon_explode(explosion_area: Area3D):
+	print("Water balloon explode: ", explosion_area.position)
 
 
 func _on_player_throw_water_balloon(
