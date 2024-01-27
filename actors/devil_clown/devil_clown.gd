@@ -13,14 +13,16 @@ const WATER_BALLOON_THROW_VELOCITY = 7
 const CYMBALS_RADIUS = 4
 const CYMBALS_CONVERT_CHANCE = 0.8
 
-var texture_down = preload("res://assets/sprites/clown/clown_down.png")
-var texture_left = preload("res://assets/sprites/clown/clown_left.png")
-var texture_right = preload("res://assets/sprites/clown/clown_right.png")
-var texture_up = preload("res://assets/sprites/clown/clown_up.png")
-var texture_left_up = preload("res://assets/sprites/clown/clown_up_left.png")
-var texture_right_up = preload("res://assets/sprites/clown/clown_up_right.png")
-var texture_left_down = preload("res://assets/sprites/clown/clown_down_left.png")
-var texture_right_down = preload("res://assets/sprites/clown/clown_down_right.png")
+const TEXTURES = {
+	"normal_up": preload("res://assets/sprites/clown/clown_up.png"),
+	"normal_down": preload("res://assets/sprites/clown/clown_down.png"),
+	"left_normal": preload("res://assets/sprites/clown/clown_left.png"),
+	"right_normal": preload("res://assets/sprites/clown/clown_right.png"),
+	"left_up": preload("res://assets/sprites/clown/clown_up_left.png"),
+	"right_up": preload("res://assets/sprites/clown/clown_up_right.png"),
+	"left_down": preload("res://assets/sprites/clown/clown_down_left.png"),
+	"right_down": preload("res://assets/sprites/clown/clown_down_right.png"),
+}
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -77,7 +79,7 @@ func _handle_abilities():
 		_use_ability_2()
 
 
-func _physics_process(delta):
+func _physics_process(delta: float):
 	position_updated.emit(position)
 	if Input.is_action_just_pressed("menu"):
 		died.emit()
@@ -95,7 +97,7 @@ func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var direction = transform.basis * Vector3(input_dir.x, 0, input_dir.y)
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
@@ -106,26 +108,8 @@ func _physics_process(delta):
 	move_and_slide()
 
 
-func _process(_delta):
+func _process(_delta: float):
 	# Change the player image based on the direction.
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
-	if input_dir.x < 0:
-		if input_dir.y < 0:
-			$Sprite3D.texture = texture_left_up
-		elif input_dir.y > 0:
-			$Sprite3D.texture = texture_left_down
-		else:
-			$Sprite3D.texture = texture_left
-	elif input_dir.x > 0:
-		if input_dir.y < 0:
-			$Sprite3D.texture = texture_right_up
-		elif input_dir.y > 0:
-			$Sprite3D.texture = texture_right_down
-		else:
-			$Sprite3D.texture = texture_right
-	else:
-		if input_dir.y < 0:
-			$Sprite3D.texture = texture_up
-		else:
-			$Sprite3D.texture = texture_down
+	$Sprite3D.texture = TEXTURES[ActorUtils.get_movement_string(input_dir)]

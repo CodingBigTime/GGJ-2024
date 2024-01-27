@@ -10,6 +10,17 @@ const FLEE_SPEED = 3.0
 const FLEE_DISTANCE = 5.0
 const DESPAWN_DISTANCE = 20.0
 
+const TEXTURES = {
+	"normal_up": preload("res://assets/sprites/villagers/villager_up.png"),
+	"normal_down": preload("res://assets/sprites/villagers/villager_down.png"),
+	"left_normal": preload("res://assets/sprites/villagers/villager_left.png"),
+	"right_normal": preload("res://assets/sprites/villagers/villager_right.png"),
+	"left_up": preload("res://assets/sprites/villagers/villager_up_left.png"),
+	"right_up": preload("res://assets/sprites/villagers/villager_up_right.png"),
+	"left_down": preload("res://assets/sprites/villagers/villager_down_left.png"),
+	"right_down": preload("res://assets/sprites/villagers/villager_down_right.png"),
+}
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var player_position := Vector3()
@@ -28,11 +39,15 @@ func _ready():
 	current_state_timer.timeout.connect(_on_current_state_timer_timeout)
 
 
-func _physics_process(delta):
+func _physics_process(delta: float):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
 	move_and_slide()
+
+
+func _process(_delta: float):
+	$Sprite3D.texture = TEXTURES[ActorUtils.get_movement_string(Vector2(velocity.x, velocity.z))]
 
 
 func _on_current_state_timer_timeout():

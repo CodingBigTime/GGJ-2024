@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cnmrsna46w1wv"]
 
 [ext_resource type="Script" path="res://actors/villager/villager.gd" id="1_6ngkl"]
-[ext_resource type="Texture2D" uid="uid://ch1urjux36k1l" path="res://assets/sprites/eye.png" id="2_1uodw"]
+[ext_resource type="Texture2D" uid="uid://gagiwffgfr61" path="res://assets/sprites/villagers/villager_down.png" id="2_7xt0v"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qn5ys"]
 height = 1.5
@@ -13,8 +13,10 @@ script = ExtResource("1_6ngkl")
 shape = SubResource("CapsuleShape3D_qn5ys")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.03
 billboard = 1
-texture = ExtResource("2_1uodw")
+texture_filter = 0
+texture = ExtResource("2_7xt0v")
 
 [node name="StateTimer" type="Timer" parent="."]
 wait_time = 0.5
