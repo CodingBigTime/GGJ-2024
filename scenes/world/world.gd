@@ -54,25 +54,37 @@ func _ready():
 			var allowed_tiles = tile_keys
 			if left != null:
 				var filter_tiles = filter_joing_tiles(left, 3)
-				allowed_tiles = ArrayUtil.intersect_i(tile_keys, filter_tiles)
+				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, filter_tiles)
+			elif top == null and out_of_bounds(tile_id.x, tile_id.y - 1):
+				var filter_tiles = filter_joing_tiles("0000", 3)
+				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, filter_tiles)
 			else:
 				queue.push_back(Vector2i(tile_id.x, tile_id.y - 1))
 
 			if top != null:
 				var filter_tiles = filter_joing_tiles(top, 0)
-				allowed_tiles = ArrayUtil.intersect_i(tile_keys, filter_tiles)
+				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, filter_tiles)
+			elif top == null and out_of_bounds(tile_id.x - 1, tile_id.y):
+				var filter_tiles = filter_joing_tiles("0000", 0)
+				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, filter_tiles)
 			else:
 				queue.push_back(Vector2i(tile_id.x - 1, tile_id.y))
 
 			if right != null:
 				var filter_tiles = filter_joing_tiles(right, 1)
-				allowed_tiles = ArrayUtil.intersect_i(tile_keys, filter_tiles)
+				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, filter_tiles)
+			elif top == null and out_of_bounds(tile_id.x, tile_id.y + 1):
+				var filter_tiles = filter_joing_tiles("0000", 1)
+				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, filter_tiles)
 			else:
 				queue.push_back(Vector2i(tile_id.x, tile_id.y + 1))
 
 			if bottom != null:
 				var filter_tiles = filter_joing_tiles(bottom, 2)
-				allowed_tiles = ArrayUtil.intersect_i(tile_keys, filter_tiles)
+				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, filter_tiles)
+			elif top == null and out_of_bounds(tile_id.x + 1, tile_id.y):
+				var filter_tiles = filter_joing_tiles("0000", 2)
+				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, filter_tiles)
 			else:
 				queue.push_back(Vector2i(tile_id.x + 1, tile_id.y))
 
@@ -81,13 +93,16 @@ func _ready():
 	for i in range(0, WORLD_HEIGHT_TILE):
 		for j in range(0, WORLD_WIDTH_TILE):
 			var tile = TILES[world[i][j]].instantiate()
-			tile.position.x = i * 10
-			tile.position.z = j * 10
+			tile.position.x = j * 10 - WORLD_WIDTH_TILE * 10 / 2
+			tile.position.z = i * 10 - WORLD_HEIGHT_TILE * 10 / 2
 			add_child(tile)
+		print(world[i])
 
 
-func filter_joing_tiles(picked_tile, a):
-	return TILES.keys().filter(func(tile): return tile[(a + 2) % 4] == picked_tile[a])
+func filter_joing_tiles(existing_tile, a):
+	print(existing_tile, " ", a)
+	print(TILES.keys().filter(func(tile): return tile[a] == existing_tile[(a + 2) % 4]))
+	return TILES.keys().filter(func(tile): return tile[a] == existing_tile[(a + 2) % 4])
 
 
 func get_tile(world, x, y):
