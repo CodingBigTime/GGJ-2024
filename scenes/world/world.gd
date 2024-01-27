@@ -96,12 +96,9 @@ func _ready():
 			tile.position.x = j * 10 - WORLD_WIDTH_TILE * 10 / 2
 			tile.position.z = i * 10 - WORLD_HEIGHT_TILE * 10 / 2
 			add_child(tile)
-		print(world[i])
 
 
 func filter_joing_tiles(existing_tile, a):
-	print(existing_tile, " ", a)
-	print(TILES.keys().filter(func(tile): return tile[a] == existing_tile[(a + 2) % 4]))
 	return TILES.keys().filter(func(tile): return tile[a] == existing_tile[(a + 2) % 4])
 
 
