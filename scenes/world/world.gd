@@ -22,6 +22,8 @@ const TILES = {
 const WORLD_WIDTH_TILE = 50
 const WORLD_HEIGHT_TILE = 50
 
+const TILE_SIZE = 20
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -93,8 +95,11 @@ func _ready():
 	for i in range(0, WORLD_HEIGHT_TILE):
 		for j in range(0, WORLD_WIDTH_TILE):
 			var tile = TILES[world[i][j]].instantiate()
-			tile.position.x = j * 10 - WORLD_WIDTH_TILE * 10 / 2
-			tile.position.z = i * 10 - WORLD_HEIGHT_TILE * 10 / 2
+			tile.position.x = j * TILE_SIZE - WORLD_WIDTH_TILE * TILE_SIZE / 2
+			tile.position.z = i * TILE_SIZE - WORLD_HEIGHT_TILE * TILE_SIZE / 2
+			tile.get_node("StaticBody3D").add_to_group("ground")
+			tile.get_node("Sprite3D").render_priority = -2
+			tile.scale = Vector3(2.01, 1, 2.01)
 			add_child(tile)
 
 

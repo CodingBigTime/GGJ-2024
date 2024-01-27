@@ -1,12 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://cutufnxtwvh8g"]
+[gd_scene load_steps=8 format=3 uid="uid://cutufnxtwvh8g"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_qr7om"]
 [ext_resource type="Script" path="res://scenes/cameras/camera_3d_orthogonal_follow.gd" id="2_hrcrx"]
 [ext_resource type="PackedScene" uid="uid://3630s2wnw678" path="res://assets/models/pingu/pingu.gltf" id="2_qb03g"]
 [ext_resource type="PackedScene" uid="uid://lhi1oicjack5" path="res://actors/devil_clown/devil_clown.tscn" id="4_l66fv"]
 [ext_resource type="PackedScene" uid="uid://dcbnlcb87gw8x" path="res://factories/villager_factory.tscn" id="5_qa1ua"]
-[ext_resource type="PackedScene" uid="uid://cn6lce1nym2nc" path="res://scenes/ui/main_ui.tscn" id="7_3cel7"]
 [ext_resource type="PackedScene" uid="uid://bjn3r77l5fke7" path="res://scenes/world/world.tscn" id="6_vvr3l"]
+[ext_resource type="PackedScene" uid="uid://cn6lce1nym2nc" path="res://scenes/ui/main_ui.tscn" id="7_3cel7"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_qr7om")
