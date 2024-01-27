@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://bsebbcagp1v0i"]
+
+[ext_resource type="Script" path="res://actors/clown_minion/clown_minion.gd" id="1_m5ihq"]
+[ext_resource type="Texture2D" uid="uid://bhmammli76lac" path="res://icon.svg" id="2_1if21"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oxrd5"]
+radius = 0.2
+height = 1.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ln3f2"]
+radius = 5.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hs8oc"]
+radius = 0.75
+
+[node name="ClownMinion" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_m5ihq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_oxrd5")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0)
+billboard = 1
+texture = ExtResource("2_1if21")
+
+[node name="StateTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="LifetimeTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="DetectionArea3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea3D"]
+shape = SubResource("SphereShape3D_ln3f2")
+
+[node name="ConvertArea3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ConvertArea3D"]
+shape = SubResource("SphereShape3D_hs8oc")
+
+[connection signal="timeout" from="LifetimeTimer" to="." method="_on_lifetime_timer_timeout"]
+[connection signal="body_entered" from="DetectionArea3D" to="." method="_on_detection_area_3d_body_entered"]
+[connection signal="body_entered" from="DetectionArea3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="ConvertArea3D" to="." method="_on_convert_area_3d_body_entered"]

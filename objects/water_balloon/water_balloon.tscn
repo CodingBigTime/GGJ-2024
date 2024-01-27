@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dg1vclhddqwgx"]
 
-[ext_resource type="Script" path="res://objects/water_balloon.gd" id="1_2k1ia"]
-[ext_resource type="Texture2D" uid="uid://ch1urjux36k1l" path="res://assets/sprites/eye.png" id="1_h2k3b"]
+[ext_resource type="Script" path="res://objects/water_balloon/water_balloon.gd" id="1_18v84"]
+[ext_resource type="Texture2D" uid="uid://ch1urjux36k1l" path="res://assets/sprites/eye.png" id="2_isshp"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_v5sap"]
 radius = 0.15
@@ -11,7 +11,7 @@ radius = 0.2
 
 [node name="WaterBalloon" type="RigidBody3D"]
 disable_mode = 2
-script = ExtResource("1_2k1ia")
+script = ExtResource("1_18v84")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_v5sap")
@@ -21,7 +21,7 @@ disabled = true
 billboard = 1
 double_sided = false
 texture_filter = 0
-texture = ExtResource("1_h2k3b")
+texture = ExtResource("2_isshp")
 
 [node name="Area3D" type="Area3D" parent="."]
 

@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://scenes/cameras/camera_3d_orthogonal_follow.gd" id="2_hrcrx"]
 [ext_resource type="PackedScene" uid="uid://3630s2wnw678" path="res://assets/models/pingu/pingu.gltf" id="2_qb03g"]
 [ext_resource type="Texture2D" uid="uid://dq12x7vt5ci6s" path="res://assets/surface/ground.png" id="3_onrk0"]
-[ext_resource type="PackedScene" uid="uid://lhi1oicjack5" path="res://actors/DevilClown/devil_clown.tscn" id="4_l66fv"]
-[ext_resource type="Script" path="res://scenes/VillagerFactory.gd" id="6_mfuef"]
+[ext_resource type="PackedScene" uid="uid://lhi1oicjack5" path="res://actors/devil_clown/devil_clown.tscn" id="4_l66fv"]
+[ext_resource type="PackedScene" uid="uid://dcbnlcb87gw8x" path="res://factories/villager_factory.tscn" id="5_qa1ua"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l082c"]
 albedo_texture = ExtResource("3_onrk0")
@@ -27,10 +27,7 @@ transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0
 [node name="DevilClown" parent="." instance=ExtResource("4_l66fv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
-[node name="VillagerFactory" type="Node3D" parent="."]
-script = ExtResource("6_mfuef")
-
-[node name="Timer" type="Timer" parent="VillagerFactory"]
+[node name="VillagerFactory" parent="DevilClown" instance=ExtResource("5_qa1ua")]
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("follow_target")]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
@@ -38,6 +35,3 @@ projection = 1
 size = 15.0
 script = ExtResource("2_hrcrx")
 follow_target = NodePath("../DevilClown")
-
-[connection signal="position_signal" from="DevilClown" to="VillagerFactory" method="_on_devil_clown_position_signal"]
-[connection signal="timeout" from="VillagerFactory/Timer" to="VillagerFactory" method="_on_timer_timeout"]

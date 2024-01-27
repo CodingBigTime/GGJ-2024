@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://htvnvue10bu7"]
+
+[ext_resource type="Script" path="res://objects/cymbals/cymbals_aoe.gd" id="1_1ej4t"]
+[ext_resource type="Texture2D" uid="uid://ch1urjux36k1l" path="res://assets/sprites/eye.png" id="2_mdlsk"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dy3wc"]
+
+[node name="CymbalsAoe" type="Area3D"]
+script = ExtResource("1_1ej4t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_dy3wc")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -6.99382e-08, 1, 0, -1.6, -4.37114e-08, 0, 0, 0)
+modulate = Color(1, 1, 1, 0.235294)
+texture_filter = 0
+render_priority = -1
+texture = ExtResource("2_mdlsk")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

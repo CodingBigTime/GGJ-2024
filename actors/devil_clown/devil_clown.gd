@@ -1,16 +1,17 @@
 extends CharacterBody3D
 
 signal died
-signal position_signal(position: Vector3)
+signal position_updated(position: Vector3)
 signal throw_water_balloon(
 	water_balloon_scene: PackedScene, position: Vector3, linear_velocity: Vector3
 )
-signal hit_cymbals(area: Area3D)
+signal hit_cymbals(cymbals_aoe: CymbalsAoe)
 
 const SPEED = 5.0
 const WATER_BALLOON_THROW_OFFSET = Vector3.ZERO
 const WATER_BALLOON_THROW_VELOCITY = 7
-const CYMBALS_RADIUS = 3
+const CYMBALS_RADIUS = 4
+const CYMBALS_CONVERT_CHANCE = 0.8
 
 var texture_down = preload("res://assets/sprites/clown/clown_down.png")
 var texture_left = preload("res://assets/sprites/clown/clown_left.png")
@@ -23,7 +24,8 @@ var texture_right_down = preload("res://assets/sprites/clown/clown_down_right.pn
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-var water_balloon_scene = preload("res://objects/water_balloon.tscn")
+var water_balloon_scene = preload("res://objects/water_balloon/water_balloon.tscn")
+var cymbals_aoe_scene = preload("res://objects/cymbals/cymbals_aoe.tscn")
 
 
 func _get_mouse_3d_position() -> Vector3:
@@ -58,18 +60,14 @@ func _use_ability_1():
 
 
 func _use_ability_2():
-	var sphere_shape = SphereShape3D.new()
-	sphere_shape.radius = self.CYMBALS_RADIUS
-	var collision_shape = CollisionShape3D.new()
-	collision_shape.shape = sphere_shape
-	var area = Area3D.new()
-	area.position = self.position
-	area.add_child(collision_shape)
+	var cymbals_aoe = cymbals_aoe_scene.instantiate()
+	cymbals_aoe.position = self.position
+	cymbals_aoe.set_radius(self.CYMBALS_RADIUS)
 	if GlobalState.debug:
 		var debug_sphere = CSGSphere3D.new()
 		debug_sphere.radius = self.CYMBALS_RADIUS
-		area.add_child(debug_sphere)
-	hit_cymbals.emit(area)
+		cymbals_aoe.add_child(debug_sphere)
+	hit_cymbals.emit(cymbals_aoe)
 
 
 func _handle_abilities():
@@ -80,7 +78,7 @@ func _handle_abilities():
 
 
 func _physics_process(delta):
-	position_signal.emit(position)
+	position_updated.emit(position)
 	if Input.is_action_just_pressed("menu"):
 		died.emit()
 		return
