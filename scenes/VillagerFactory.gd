@@ -11,6 +11,7 @@ func _ready():
 	var villager_instance: Villager = villager.instantiate()
 	player_position_signal.connect(villager_instance._update_player_pos)
 	villager_instance.position = Vector3(2, 2, 2)
+	add_child(villager_instance)
 
 
 func _on_devil_clown_position_signal(position):
