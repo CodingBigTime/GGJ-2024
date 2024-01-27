@@ -17,7 +17,6 @@ func _ready():
 
 
 func start_game():
-	var scene: String
 	get_tree().change_scene_to_file(MAIN_SCENE_FILE)
 
 
