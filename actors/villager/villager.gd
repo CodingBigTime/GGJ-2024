@@ -86,8 +86,10 @@ func _on_current_state_timer_timeout():
 			self.velocity = direction * self.FLEE_SPEED
 
 
-func _mark_for_attack():
+func mark_for_attack():
 	marked_for_attack = true
+	$Mark.visible = true
+	$Sprite3D.visible = false
 
 
 func die():

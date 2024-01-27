@@ -9,7 +9,7 @@ signal hit_cymbals(cymbals_aoe: CymbalsAoe)
 
 const SPEED = 5.0
 const WATER_BALLOON_THROW_OFFSET = Vector3.ZERO
-const WATER_BALLOON_THROW_VELOCITY = 7
+const WATER_BALLOON_THROW_VELOCITY = 3.18
 const CYMBALS_RADIUS = 4
 const CYMBALS_CONVERT_CHANCE = 0.8
 
@@ -48,15 +48,14 @@ func _use_ability_1():
 		return
 	var balloon_position = self.position + WATER_BALLOON_THROW_OFFSET
 	var direction_vector = mouse_3d_position - self.position
-	var direction_vector_2d_flat_normalized = (
-		Vector3(direction_vector.x, 0, direction_vector.z).normalized()
-	)
+	var direction_vector_2d_flat = Vector3(direction_vector.x, 0, direction_vector.z)
+	var direction_vector_2d_flat_normalized = direction_vector_2d_flat.normalized()
 	var balloon_linear_velocity = (
 		(
 			Vector3(direction_vector_2d_flat_normalized.x, 1, direction_vector_2d_flat_normalized.z)
 			. normalized()
 		)
-		* WATER_BALLOON_THROW_VELOCITY
+		* (WATER_BALLOON_THROW_VELOCITY * sqrt(direction_vector_2d_flat.length()))
 	)
 	throw_water_balloon.emit(water_balloon_scene, balloon_position, balloon_linear_velocity)
 

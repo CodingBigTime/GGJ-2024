@@ -14,6 +14,7 @@ albedo_texture = ExtResource("3_onrk0")
 script = ExtResource("1_qr7om")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." groups=["ground"]]
+sorting_offset = -2.0
 material_override = SubResource("StandardMaterial3D_l082c")
 use_collision = true
 size = Vector3(1000, 1, 1000)

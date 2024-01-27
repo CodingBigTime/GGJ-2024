@@ -7,7 +7,7 @@ enum State { IDLE, WONDER, FOLLOW, ATTACK }
 
 const WONDER_SPEED = 2.0
 const FOLLOW_SPEED = 6.0
-const FOLLOW_DISTANCE = 7.0
+const FOLLOW_DISTANCE = 6.0
 const DESPAWN_DISTANCE = 20.0
 
 const TEXTURES = {
@@ -100,13 +100,13 @@ func _on_current_state_timer_timeout():
 			# Move away from the player
 			var direction = player_position - self.position
 			direction = direction.normalized()
-			self.velocity = direction * WONDER_SPEED
+			self.velocity = direction * FOLLOW_SPEED
 		State.ATTACK:
 			# Move towards the target
 			if is_instance_valid(self.current_target):
 				var direction = self.current_target.position - self.position
 				direction = direction.normalized()
-				self.velocity = direction * WONDER_SPEED
+				self.velocity = direction * FOLLOW_SPEED
 			else:
 				state = State.IDLE
 				self.velocity = Vector3()
@@ -124,10 +124,15 @@ func replace_target_if_higher_priority(new_target: Villager):
 		self.current_target = new_target
 		self.current_target.died.connect(_target_died)
 		return
-	if (
+	if new_target.marked_for_attack and not self.current_target.marked_for_attack:
+		self.current_target.died.disconnect(_target_died)
+		self.current_target = new_target
+		self.current_target.died.connect(_target_died)
+	elif (
 		self.position.distance_squared_to(new_target.position)
 		< self.position.distance_squared_to(self.current_target.position)
 	):
+		self.current_target.died.disconnect(_target_died)
 		self.current_target = new_target
 		self.current_target.died.connect(_target_died)
 

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://csiy2vk2fet77"]
+
+[ext_resource type="Texture2D" uid="uid://dmqe425200dgb" path="res://assets/sprites/junk/junk1.png" id="1_dsyib"]
+[ext_resource type="Script" path="res://objects/water_balloon/water_balloon_aoe.gd" id="1_sk1w1"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_x2g6s"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5kitx"]
+
+[node name="WaterBalloonAoe" type="Area3D"]
+script = ExtResource("1_sk1w1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_x2g6s")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+texture_filter = 0
+render_priority = -1
+texture = ExtResource("1_dsyib")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_5kitx")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

@@ -21,3 +21,9 @@ texture = ExtResource("2_7xt0v")
 [node name="StateTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
+
+[node name="Mark" type="Sprite3D" parent="."]
+visible = false
+modulate = Color(0, 0.831373, 1, 1)
+billboard = 1
+texture = ExtResource("2_1uodw")
