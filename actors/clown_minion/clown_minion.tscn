@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bsebbcagp1v0i"]
 
 [ext_resource type="Script" path="res://actors/clown_minion/clown_minion.gd" id="1_m5ihq"]
-[ext_resource type="Texture2D" uid="uid://bhmammli76lac" path="res://icon.svg" id="2_1if21"]
+[ext_resource type="Texture2D" uid="uid://molqs5x1geog" path="res://assets/sprites/clownie/clownie_down.png" id="2_fju3j"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oxrd5"]
 radius = 0.2
@@ -22,9 +22,10 @@ script = ExtResource("1_m5ihq")
 shape = SubResource("CapsuleShape3D_oxrd5")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0)
+pixel_size = 0.03
 billboard = 1
-texture = ExtResource("2_1if21")
+texture_filter = 0
+texture = ExtResource("2_fju3j")
 
 [node name="StateTimer" type="Timer" parent="."]
 wait_time = 0.5

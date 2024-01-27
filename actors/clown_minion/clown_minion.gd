@@ -10,6 +10,17 @@ const FOLLOW_SPEED = 6.0
 const FOLLOW_DISTANCE = 7.0
 const DESPAWN_DISTANCE = 20.0
 
+const TEXTURES = {
+	"normal_up": preload("res://assets/sprites/clownie/clownie_up.png"),
+	"normal_down": preload("res://assets/sprites/clownie/clownie_down.png"),
+	"left_normal": preload("res://assets/sprites/clownie/clownie_left.png"),
+	"right_normal": preload("res://assets/sprites/clownie/clownie_right.png"),
+	"left_up": preload("res://assets/sprites/clownie/clownie_left_up.png"),
+	"right_up": preload("res://assets/sprites/clownie/clownie_up_right.png"),
+	"left_down": preload("res://assets/sprites/clownie/clownie_left_down.png"),
+	"right_down": preload("res://assets/sprites/clownie/clownie_down_right.png"),
+	"normal_normal": preload("res://assets/sprites/clownie/clownie_down.png"),
+}
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var player_position := Vector3()
@@ -32,6 +43,10 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 
 	move_and_slide()
+
+
+func _process(delta):
+	$Sprite3D.texture = TEXTURES[ActorUtils.get_movement_string(Vector2(velocity.x, velocity.z))]
 
 
 func _on_current_state_timer_timeout():
