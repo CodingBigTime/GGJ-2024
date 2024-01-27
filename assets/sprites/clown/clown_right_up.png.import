@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvxpgpsxkwdcl"
-path="res://.godot/imported/clown_down_right.png-34e89b3b838e893a7a14bcad0d0a9e22.ctex"
+uid="uid://cw0o7vjaam8ln"
+path="res://.godot/imported/clown_right_up.png-a24e5d7a2260ba872814da5b1d37a830.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/clown/clown_down_right.png"
-dest_files=["res://.godot/imported/clown_down_right.png-34e89b3b838e893a7a14bcad0d0a9e22.ctex"]
+source_file="res://assets/sprites/clown/clown_right_up.png"
+dest_files=["res://.godot/imported/clown_right_up.png-a24e5d7a2260ba872814da5b1d37a830.ctex"]
 
 [params]
 
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

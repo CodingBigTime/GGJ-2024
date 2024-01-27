@@ -2,10 +2,25 @@ extends RigidBody3D
 
 signal explode(water_balloon_aoe: WaterBalloonAoe)
 
+const VARIANTS = {
+	"blue": preload("res://assets/sprites/balloon/blue_balloon.png"),
+	"pink": preload("res://assets/sprites/balloon/pink_balloon.png"),
+	"gold": preload("res://assets/sprites/balloon/gold_balloon.png"),
+}
+
 var explosion_radius: float = 1
 var water_balloon_aoe_scene: PackedScene = preload(
 	"res://objects/water_balloon/water_balloon_aoe.tscn"
 )
+
+
+func _ready():
+	var water_balloon_sprite = Sprite3D.new()
+	water_balloon_sprite.texture = Random.random_from_array(VARIANTS.values())
+	water_balloon_sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	water_balloon_sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+	water_balloon_sprite.pixel_size = 0.03
+	add_child(water_balloon_sprite)
 
 
 func _on_area_3d_body_entered(body: Node3D):

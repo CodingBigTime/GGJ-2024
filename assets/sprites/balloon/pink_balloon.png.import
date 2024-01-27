@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnrxfmyqmeup3"
-path="res://.godot/imported/clown_up_left.png-aafdc030e25c066a2b6085b393370081.ctex"
+uid="uid://dsniwga2li33s"
+path="res://.godot/imported/pink_balloon.png-356246e8da931ae1351457a7bd3a0224.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/clown/clown_up_left.png"
-dest_files=["res://.godot/imported/clown_up_left.png-aafdc030e25c066a2b6085b393370081.ctex"]
+source_file="res://assets/sprites/balloon/pink_balloon.png"
+dest_files=["res://.godot/imported/pink_balloon.png-356246e8da931ae1351457a7bd3a0224.ctex"]
 
 [params]
 

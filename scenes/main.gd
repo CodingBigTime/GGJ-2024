@@ -86,7 +86,7 @@ func _on_villager_died(villager: Villager):
 
 func _on_clown_minion_died(clown_minion: ClownMinion):
 	# Convert clown minion to junk
-	var junk_texture = self.junk_options[randi() % self.junk_options.size()]
+	var junk_texture = Random.random_from_array(self.junk_options)
 	var junk_sprite = Sprite3D.new()
 	junk_sprite.texture = junk_texture
 	junk_sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED

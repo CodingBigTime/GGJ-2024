@@ -18,10 +18,10 @@ const TEXTURES = {
 	"normal_down": preload("res://assets/sprites/clown/clown_down.png"),
 	"left_normal": preload("res://assets/sprites/clown/clown_left.png"),
 	"right_normal": preload("res://assets/sprites/clown/clown_right.png"),
-	"left_up": preload("res://assets/sprites/clown/clown_up_left.png"),
-	"right_up": preload("res://assets/sprites/clown/clown_up_right.png"),
-	"left_down": preload("res://assets/sprites/clown/clown_down_left.png"),
-	"right_down": preload("res://assets/sprites/clown/clown_down_right.png"),
+	"left_up": preload("res://assets/sprites/clown/clown_left_up.png"),
+	"right_up": preload("res://assets/sprites/clown/clown_right_up.png"),
+	"left_down": preload("res://assets/sprites/clown/clown_left_down.png"),
+	"right_down": preload("res://assets/sprites/clown/clown_right_down.png"),
 }
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -30,7 +30,7 @@ var water_balloon_scene = preload("res://objects/water_balloon/water_balloon.tsc
 var cymbals_aoe_scene = preload("res://objects/cymbals/cymbals_aoe.tscn")
 
 
-func _get_mouse_3d_position() -> Vector3:
+func _get_mouse_3d_position():
 	var camera = get_viewport().get_camera_3d()
 	var space_state = get_world_3d().direct_space_state
 	var mouse_pos = get_viewport().get_mouse_position()

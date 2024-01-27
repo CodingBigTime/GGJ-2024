@@ -57,3 +57,7 @@ static func random_3d_cylinder_point(
 
 	printerr("Failed to find a random point")
 	return Vector3.ZERO
+
+
+static func random_from_array(array: Array):
+	return array[randi_range(0, array.size() - 1)]
