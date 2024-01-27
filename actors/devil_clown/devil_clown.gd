@@ -22,7 +22,6 @@ const TEXTURES = {
 	"right_up": preload("res://assets/sprites/clown/clown_up_right.png"),
 	"left_down": preload("res://assets/sprites/clown/clown_down_left.png"),
 	"right_down": preload("res://assets/sprites/clown/clown_down_right.png"),
-	"normal_normal": preload("res://assets/sprites/clown/clown_down.png"),
 }
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -80,7 +79,7 @@ func _handle_abilities():
 		_use_ability_2()
 
 
-func _physics_process(delta):
+func _physics_process(delta: float):
 	position_updated.emit(position)
 	if Input.is_action_just_pressed("menu"):
 		died.emit()
@@ -98,7 +97,7 @@ func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y))
+	var direction = transform.basis * Vector3(input_dir.x, 0, input_dir.y)
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
@@ -109,7 +108,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 
-func _process(_delta):
+func _process(_delta: float):
 	# Change the player image based on the direction.
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
