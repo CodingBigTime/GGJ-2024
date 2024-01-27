@@ -1,24 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://cutufnxtwvh8g"]
+[gd_scene load_steps=8 format=3 uid="uid://cutufnxtwvh8g"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_qr7om"]
 [ext_resource type="Script" path="res://scenes/cameras/camera_3d_orthogonal_follow.gd" id="2_hrcrx"]
 [ext_resource type="PackedScene" uid="uid://3630s2wnw678" path="res://assets/models/pingu/pingu.gltf" id="2_qb03g"]
-[ext_resource type="Texture2D" uid="uid://dq12x7vt5ci6s" path="res://assets/surface/ground.png" id="3_onrk0"]
 [ext_resource type="PackedScene" uid="uid://lhi1oicjack5" path="res://actors/devil_clown/devil_clown.tscn" id="4_l66fv"]
 [ext_resource type="PackedScene" uid="uid://dcbnlcb87gw8x" path="res://factories/villager_factory.tscn" id="5_qa1ua"]
+[ext_resource type="PackedScene" uid="uid://bjn3r77l5fke7" path="res://scenes/world/world.tscn" id="6_vvr3l"]
 [ext_resource type="PackedScene" uid="uid://cn6lce1nym2nc" path="res://scenes/ui/main_ui.tscn" id="7_3cel7"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l082c"]
-albedo_texture = ExtResource("3_onrk0")
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_qr7om")
-
-[node name="CSGBox3D" type="CSGBox3D" parent="." groups=["ground"]]
-sorting_offset = -2.0
-material_override = SubResource("StandardMaterial3D_l082c")
-use_collision = true
-size = Vector3(1000, 1, 1000)
 
 [node name="blockbench_export" parent="." instance=ExtResource("2_qb03g")]
 transform = Transform3D(-1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, -1, -4, 0.5, -5)
@@ -39,3 +30,5 @@ script = ExtResource("2_hrcrx")
 follow_target = NodePath("../DevilClown")
 
 [node name="main_ui" parent="." instance=ExtResource("7_3cel7")]
+
+[node name="World" parent="." instance=ExtResource("6_vvr3l")]

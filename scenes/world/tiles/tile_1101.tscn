@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://wac844lpogl"]
+
+[ext_resource type="Texture2D" uid="uid://bx6cuvp4gf8rs" path="res://assets/sprites/tiles/1101.png" id="1_1fmk8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8ope6"]
+margin = 0.0
+size = Vector3(10, 0.1, 10)
+
+[node name="Tile2" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(3.9, 0, 0, 0, -1.70474e-07, 3.9, 0, -3.9, -1.70474e-07, 0, 0, 0)
+double_sided = false
+texture_filter = 0
+render_priority = -1
+texture = ExtResource("1_1fmk8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_8ope6")
