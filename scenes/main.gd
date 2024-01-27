@@ -8,7 +8,7 @@ var junk_options: Array[CompressedTexture2D] = [junk1, junk2]
 
 @onready var devil_clown = $DevilClown
 @onready var villager_factory = $DevilClown/VillagerFactory
-@onready var score_label = $main_ui/AspectRatioContainer2/score_label
+@onready var score_label = $main_ui/AspectRatioContainer2/ScoreLabel
 @onready var boost_bar = $main_ui/AspectRatioContainer/BoostBar
 
 
@@ -16,7 +16,7 @@ func _ready():
 	self.devil_clown.died.connect(self._go_to_main_menu)
 	self.devil_clown.throw_water_balloon.connect(self._on_player_throw_water_balloon)
 	self.devil_clown.hit_cymbals.connect(self._on_cymbals_hit)
-	self.devil_clown.power_updated.connect(self.boost_bar.update_value)
+	self.devil_clown.power_change.connect(self.boost_bar.update_value)
 	print_debug(self.villager_factory)
 	self.villager_factory.spawn_villager.connect(self._on_spawn_villager)
 

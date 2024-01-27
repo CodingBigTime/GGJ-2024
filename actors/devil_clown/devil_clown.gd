@@ -29,7 +29,7 @@ const TEXTURES = {
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var water_balloon_scene = preload("res://objects/water_balloon/water_balloon.tscn")
 var cymbals_aoe_scene = preload("res://objects/cymbals/cymbals_aoe.tscn")
-var power: float = 1
+var power: float = 20
 
 
 func _get_mouse_3d_position():
