@@ -9,7 +9,7 @@ size = Vector3(10, 0.1, 10)
 [node name="Tile4" type="Node3D"]
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(3.9, 0, 0, 0, -1.70474e-07, -3.9, 0, 3.9, -1.70474e-07, 0, 0, 0)
+transform = Transform3D(3.9, 0, 0, 0, -1.70474e-07, 3.9, 0, -3.9, -1.70474e-07, 0, 0, 0)
 render_priority = -1
 texture = ExtResource("1_u6j1y")
 

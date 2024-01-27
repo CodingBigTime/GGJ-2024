@@ -17,6 +17,7 @@ var texture_right_down = load("res://assets/sprites/clown/clown_down_right.png")
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+
 func _physics_process(delta):
 	if Input.is_action_just_pressed("menu"):
 		died.emit()
@@ -43,7 +44,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 
-func _process(delta):
+func _process(_delta):
 	# Change the player image based on the direction.
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
