@@ -6,6 +6,7 @@ signal throw_water_balloon(
 	water_balloon_scene: PackedScene, position: Vector3, linear_velocity: Vector3
 )
 signal hit_cymbals(cymbals_aoe: CymbalsAoe)
+signal power_change(new_power: float)
 
 const SPEED = 5.0
 const WATER_BALLOON_THROW_OFFSET = Vector3.ZERO
@@ -28,6 +29,7 @@ const TEXTURES = {
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var water_balloon_scene = preload("res://objects/water_balloon/water_balloon.tscn")
 var cymbals_aoe_scene = preload("res://objects/cymbals/cymbals_aoe.tscn")
+var power: float = 20
 
 
 func _get_mouse_3d_position():
@@ -73,9 +75,13 @@ func _use_ability_2():
 
 func _handle_abilities():
 	if Input.is_action_just_pressed("use_ability_1"):
-		_use_ability_1()
+		if check_power_boost_cost(0.2):
+			_use_ability_1()
+			use_power(0.2)
 	if Input.is_action_just_pressed("use_ability_2"):
-		_use_ability_2()
+		if check_power_boost_cost(0.5):
+			_use_ability_2()
+			use_power(0.5)
 
 
 func _physics_process(delta: float):
@@ -112,3 +118,23 @@ func _process(_delta: float):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
 	$Sprite3D.texture = TEXTURES[ActorUtils.get_movement_string(input_dir)]
+	power_change.emit(power)
+
+
+func use_power(cost: float) -> void:
+	power -= cost
+	power_change.emit(power)
+
+
+func check_power_boost_cost(cost: float) -> bool:
+	if power >= cost:
+		return true
+	return false
+
+
+func _on_body_entered(body: Node3D):
+	print(body)
+	if body.is_in_group("junk_items") && body.texture == "branch":
+		print(body)
+		power += 5
+		body.queue_free()

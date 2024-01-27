@@ -6,7 +6,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qn5ys"]
 height = 1.5
 
-[node name="DevilClown" type="CharacterBody3D"]
+[node name="DevilClown" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_metc8")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
