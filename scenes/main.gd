@@ -8,6 +8,7 @@ var junk_options: Array[CompressedTexture2D] = [junk1, junk2]
 
 @onready var devil_clown = $DevilClown
 @onready var villager_factory = $DevilClown/VillagerFactory
+@onready var score_label = $main_ui/AspectRatioContainer2/score_label
 
 
 func _ready():
@@ -72,6 +73,7 @@ func _on_spawn_villager(villager_scene: PackedScene, relative_spawn_position: Ve
 
 func _on_villager_died(villager: Villager):
 	# Convert villager to clown minion
+	self.score_label.increase_score(1)
 	var clown_minion = self.clown_minion_scene.instantiate()
 	clown_minion.position = villager.position
 
