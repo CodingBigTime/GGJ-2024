@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://0tgc8uj3pkqr"]
+
+[ext_resource type="Texture2D" uid="uid://3i2r166uesg8" path="res://assets/sprites/tiles/tile-3.svg" id="1_3shqu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gjt27"]
+margin = 0.0
+size = Vector3(5, 0.1, 5)
+
+[node name="Tile3" type="Node3D"]
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_gjt27")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(3.87, 0, 0, 0, -1.69163e-07, -3.87, 0, 3.87, -1.69163e-07, 0, 0, 0)
+texture = ExtResource("1_3shqu")
