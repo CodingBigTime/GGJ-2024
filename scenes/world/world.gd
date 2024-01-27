@@ -43,22 +43,22 @@ func _ready():
 
 			var allowed_tiles = tiles_rules_keys
 			if left != null:
-				allowed_tiles = ArrayUtil.intersectI(allowed_tiles, TILE_RULES[left])
+				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, TILE_RULES[left])
 			else:
 				queue.push_back(Vector2i(tile_id.x, tile_id.y - 1))
 
 			if top != null:
-				allowed_tiles = ArrayUtil.intersectI(allowed_tiles, TILE_RULES[top])
+				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, TILE_RULES[top])
 			else:
 				queue.push_back(Vector2i(tile_id.x - 1, tile_id.y))
 
 			if right != null:
-				allowed_tiles = ArrayUtil.intersectI(allowed_tiles, TILE_RULES[right])
+				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, TILE_RULES[right])
 			else:
 				queue.push_back(Vector2i(tile_id.x, tile_id.y + 1))
 
 			if bottom != null:
-				allowed_tiles = ArrayUtil.intersectI(allowed_tiles, TILE_RULES[bottom])
+				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, TILE_RULES[bottom])
 			else:
 				queue.push_back(Vector2i(tile_id.x + 1, tile_id.y))
 
