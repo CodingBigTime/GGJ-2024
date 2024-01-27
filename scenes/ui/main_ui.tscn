@@ -47,5 +47,3 @@ alignment_vertical = 2
 
 [node name="score_label" parent="AspectRatioContainer2" instance=ExtResource("2_vstrq")]
 layout_mode = 2
-
-[connection signal="value_changed" from="AspectRatioContainer/boost_bar" to="AspectRatioContainer/boost_bar" method="_on_value_changed"]
