@@ -108,7 +108,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 
-func _process(delta):
+func _process(_delta):
 	# Change the player image based on the direction.
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
