@@ -1,11 +1,63 @@
-[gd_scene load_steps=5 format=3 uid="uid://csiy2vk2fet77"]
+[gd_scene load_steps=15 format=3 uid="uid://csiy2vk2fet77"]
 
 [ext_resource type="Texture2D" uid="uid://dmqe425200dgb" path="res://assets/sprites/junk/junk1.png" id="1_dsyib"]
 [ext_resource type="Script" path="res://objects/water_balloon/water_balloon_aoe.gd" id="1_sk1w1"]
+[ext_resource type="Texture2D" uid="uid://on68qisjvqk1" path="res://assets/sprites/water_droplet.png" id="3_w6nye"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_x2g6s"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5kitx"]
+
+[sub_resource type="Curve" id="Curve_6kucj"]
+_data = [Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.673913, 0.549451), -1.16264, -1.16264, 0, 0, Vector2(1, 0), -3.79121, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_4g1c1"]
+curve = SubResource("Curve_6kucj")
+
+[sub_resource type="Gradient" id="Gradient_j32bb"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2q43w"]
+gradient = SubResource("Gradient_j32bb")
+
+[sub_resource type="Curve" id="Curve_77ca0"]
+min_value = -2.23517e-10
+_data = [Vector2(0, 0.197802), 0.0, 0.0, 0, 0, Vector2(1, -2.23517e-10), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ouddv"]
+curve = SubResource("Curve_77ca0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8ksch"]
+emission_shape_offset = Vector3(0, -0.5, 0)
+spread = 180.0
+initial_velocity_min = -2.0
+initial_velocity_max = 2.0
+scale_min = 0.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_ouddv")
+color_ramp = SubResource("GradientTexture1D_2q43w")
+alpha_curve = SubResource("CurveTexture_4g1c1")
+collision_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m585h"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("3_w6nye")
+texture_filter = 0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+proximity_fade_enabled = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_xk30i"]
+material = SubResource("StandardMaterial3D_m585h")
+shape = 0
 
 [node name="WaterBalloonAoe" type="Area3D"]
 script = ExtResource("1_sk1w1")
@@ -14,7 +66,7 @@ script = ExtResource("1_sk1w1")
 shape = SubResource("SphereShape3D_x2g6s")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.75
 one_shot = true
 autostart = true
 
@@ -28,6 +80,14 @@ texture = ExtResource("1_dsyib")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_5kitx")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+amount = 128
+lifetime = 0.75
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_8ksch")
+draw_pass_1 = SubResource("RibbonTrailMesh_xk30i")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

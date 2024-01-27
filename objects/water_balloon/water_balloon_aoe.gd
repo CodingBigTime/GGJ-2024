@@ -15,3 +15,8 @@ func set_radius(radius: float):
 	$CollisionShape3D.shape.radius = radius
 	$Area3D/CollisionShape3D.shape.radius = radius
 	$Sprite3D.scale = Vector3(3 * radius, 3 * radius, 1)
+
+
+func _ready():
+	$GPUParticles3D.one_shot = true
+	$GPUParticles3D.emitting = true
