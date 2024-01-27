@@ -7,8 +7,6 @@ enum GameScene {
 }
 
 const MAIN_SCENE_FILE = "res://scenes/main.tscn"
-const TEST_2D_SCENE_FILE = "res://scenes/testing/main_2d.tscn"
-const TEST_3D_SCENE_FILE = "res://scenes/testing/main_3d.tscn"
 
 @export var game_scene: GameScene = GameScene.MAIN
 
@@ -20,18 +18,7 @@ func _ready():
 
 func start_game():
 	var scene: String
-	match game_scene:
-		GameScene.MAIN:
-			scene = MAIN_SCENE_FILE
-		GameScene.TEST_2D:
-			scene = TEST_2D_SCENE_FILE
-		GameScene.TEST_3D:
-			scene = TEST_3D_SCENE_FILE
-		_:
-			printerr("Invalid game scene: " + str(game_scene))
-			return
-
-	get_tree().change_scene_to_file(scene)
+	get_tree().change_scene_to_file(MAIN_SCENE_FILE)
 
 
 func quit_game():
