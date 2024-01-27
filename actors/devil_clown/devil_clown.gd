@@ -130,3 +130,11 @@ func check_power_boost_cost(cost: float) -> bool:
 	if power >= cost:
 		return true
 	return false
+
+
+func _on_body_entered(body: Node3D):
+	print(body)
+	if body.is_in_group("junk_items") && body.texture == "branch":
+		print(body)
+		power += 5
+		body.queue_free()

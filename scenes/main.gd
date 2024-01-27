@@ -94,5 +94,6 @@ func _on_clown_minion_died(clown_minion: ClownMinion):
 	junk_sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	junk_sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 	junk_sprite.position = clown_minion.position
+	junk_sprite.add_to_group("junk_items")
 	# TODO: Add another particle effect
 	add_child(junk_sprite)
