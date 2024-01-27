@@ -1,12 +1,22 @@
 extends Node3D
 
-const TILE_RULES = {1: [2, 3, 4], 2: [1, 3, 4], 3: [1, 2, 4], 4: [1, 2, 3]}
-
-const TILE_SCENES = {
-	1: preload("res://scenes/world/tiles/tile1.tscn"),
-	2: preload("res://scenes/world/tiles/tile2.tscn"),
-	3: preload("res://scenes/world/tiles/tile3.tscn"),
-	4: preload("res://scenes/world/tiles/tile4.tscn"),
+const TILES = {
+	"0000": preload("res://scenes/world/tiles/tile_0000.tscn"),
+	"0001": preload("res://scenes/world/tiles/tile_0001.tscn"),
+	"0010": preload("res://scenes/world/tiles/tile_0010.tscn"),
+	"0011": preload("res://scenes/world/tiles/tile_0011.tscn"),
+	"0100": preload("res://scenes/world/tiles/tile_0100.tscn"),
+	"0101": preload("res://scenes/world/tiles/tile_0101.tscn"),
+	"0110": preload("res://scenes/world/tiles/tile_0110.tscn"),
+	"0111": preload("res://scenes/world/tiles/tile_0111.tscn"),
+	"1000": preload("res://scenes/world/tiles/tile_1000.tscn"),
+	"1001": preload("res://scenes/world/tiles/tile_1001.tscn"),
+	"1010": preload("res://scenes/world/tiles/tile_1010.tscn"),
+	"1011": preload("res://scenes/world/tiles/tile_1011.tscn"),
+	"1100": preload("res://scenes/world/tiles/tile_1100.tscn"),
+	"1101": preload("res://scenes/world/tiles/tile_1101.tscn"),
+	"1110": preload("res://scenes/world/tiles/tile_1110.tscn"),
+	"1111": preload("res://scenes/world/tiles/tile_1111.tscn"),
 }
 
 const WORLD_WIDTH_TILE = 50
@@ -27,7 +37,7 @@ func _ready():
 			row.push_back(null)
 		world.push_back(row)
 
-	var tiles_rules_keys = TILE_RULES.keys()
+	var tile_keys = TILES.keys()
 	queue.push_front(Vector2i(WORLD_HEIGHT_TILE / 2, WORLD_WIDTH_TILE / 2))
 
 	while queue.size() > 0:
@@ -41,24 +51,28 @@ func _ready():
 			var right = get_tile(world, tile_id.x, tile_id.y + 1)
 			var bottom = get_tile(world, tile_id.x + 1, tile_id.y)
 
-			var allowed_tiles = tiles_rules_keys
+			var allowed_tiles = tile_keys
 			if left != null:
-				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, TILE_RULES[left])
+				var filter_tiles = filter_joing_tiles(left, 3)
+				allowed_tiles = ArrayUtil.intersect_i(tile_keys, filter_tiles)
 			else:
 				queue.push_back(Vector2i(tile_id.x, tile_id.y - 1))
 
 			if top != null:
-				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, TILE_RULES[top])
+				var filter_tiles = filter_joing_tiles(top, 0)
+				allowed_tiles = ArrayUtil.intersect_i(tile_keys, filter_tiles)
 			else:
 				queue.push_back(Vector2i(tile_id.x - 1, tile_id.y))
 
 			if right != null:
-				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, TILE_RULES[right])
+				var filter_tiles = filter_joing_tiles(right, 1)
+				allowed_tiles = ArrayUtil.intersect_i(tile_keys, filter_tiles)
 			else:
 				queue.push_back(Vector2i(tile_id.x, tile_id.y + 1))
 
 			if bottom != null:
-				allowed_tiles = ArrayUtil.intersect_i(allowed_tiles, TILE_RULES[bottom])
+				var filter_tiles = filter_joing_tiles(bottom, 2)
+				allowed_tiles = ArrayUtil.intersect_i(tile_keys, filter_tiles)
 			else:
 				queue.push_back(Vector2i(tile_id.x + 1, tile_id.y))
 
@@ -66,10 +80,14 @@ func _ready():
 
 	for i in range(0, WORLD_HEIGHT_TILE):
 		for j in range(0, WORLD_WIDTH_TILE):
-			var tile = TILE_SCENES[world[i][j]].instantiate()
-			tile.position.x = i * 5
-			tile.position.z = j * 5
+			var tile = TILES[world[i][j]].instantiate()
+			tile.position.x = i * 10
+			tile.position.z = j * 10
 			add_child(tile)
+
+
+func filter_joing_tiles(picked_tile, a):
+	return TILES.keys().filter(func(tile): return tile[(a + 2) % 4] == picked_tile[a])
 
 
 func get_tile(world, x, y):

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://t0unmlco8lw0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f1rt7"]
+margin = 0.0
+size = Vector3(5, 0.1, 5)
+
+[node name="Tile" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(3.87, 0, 0, 0, -1.69163e-07, -3.87, 0, 3.87, -1.69163e-07, 0, 0, 0)
+render_priority = -1
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_f1rt7")
