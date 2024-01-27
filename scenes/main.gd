@@ -31,10 +31,9 @@ func _go_to_main_menu():
 	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
 
 
-func _on_water_balloon_explode(explosion_area: Area3D):
-	if GlobalState.debug:
-		add_child(explosion_area)
-	print("Water balloon explode: ", explosion_area.position)
+func _on_water_balloon_explode(water_balloon_aoe: WaterBalloonAoe):
+	add_child(water_balloon_aoe)
+	print("Water balloon explode: ", water_balloon_aoe.position)
 
 
 func _on_cymbals_hit(cymbals_aoe: CymbalsAoe):
