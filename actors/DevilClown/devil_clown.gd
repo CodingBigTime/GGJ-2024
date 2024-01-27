@@ -2,9 +2,15 @@ extends CharacterBody3D
 
 signal died
 signal position_signal(position: Vector3)
+signal throw_water_balloon(
+	water_balloon_scene: PackedScene, position: Vector3, linear_velocity: Vector3
+)
+signal hit_cymbals(area: Area3D)
 
 const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+const WATER_BALLOON_THROW_OFFSET = Vector3.ZERO
+const WATER_BALLOON_THROW_VELOCITY = 7
+const CYMBALS_RADIUS = 3
 
 var texture_down = preload("res://assets/sprites/clown/clown_down.png")
 var texture_left = preload("res://assets/sprites/clown/clown_left.png")
@@ -17,19 +23,76 @@ var texture_right_down = preload("res://assets/sprites/clown/clown_down_right.pn
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var water_balloon_scene = preload("res://objects/water_balloon.tscn")
+
+
+func _get_mouse_3d_position() -> Vector3:
+	var camera = get_viewport().get_camera_3d()
+	var space_state = get_world_3d().direct_space_state
+	var mouse_pos = get_viewport().get_mouse_position()
+	var ray_origin = camera.project_ray_origin(mouse_pos)
+	var ray_end = ray_origin + camera.project_ray_normal(mouse_pos) * 1000
+	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+	var intersection_dict = space_state.intersect_ray(query)
+	var intersection = intersection_dict["position"] if intersection_dict.size() > 0 else null
+	return intersection
+
+
+func _use_ability_1():
+	var mouse_3d_position = _get_mouse_3d_position()
+	if not mouse_3d_position:
+		return
+	var balloon_position = self.position + WATER_BALLOON_THROW_OFFSET
+	var direction_vector = mouse_3d_position - self.position
+	var direction_vector_2d_flat_normalized = (
+		Vector3(direction_vector.x, 0, direction_vector.z).normalized()
+	)
+	var balloon_linear_velocity = (
+		(
+			Vector3(direction_vector_2d_flat_normalized.x, 1, direction_vector_2d_flat_normalized.z)
+			. normalized()
+		)
+		* WATER_BALLOON_THROW_VELOCITY
+	)
+	throw_water_balloon.emit(water_balloon_scene, balloon_position, balloon_linear_velocity)
+
+
+func _use_ability_2():
+	var sphere_shape = SphereShape3D.new()
+	sphere_shape.radius = self.CYMBALS_RADIUS
+	var collision_shape = CollisionShape3D.new()
+	collision_shape.shape = sphere_shape
+	var area = Area3D.new()
+	area.position = self.position
+	area.add_child(collision_shape)
+	if GlobalState.debug:
+		var debug_sphere = CSGSphere3D.new()
+		debug_sphere.radius = self.CYMBALS_RADIUS
+		area.add_child(debug_sphere)
+	hit_cymbals.emit(area)
+
+
+func _handle_abilities():
+	if Input.is_action_just_pressed("use_ability_1"):
+		_use_ability_1()
+	if Input.is_action_just_pressed("use_ability_2"):
+		_use_ability_2()
+
 
 func _physics_process(delta):
 	position_signal.emit(position)
 	if Input.is_action_just_pressed("menu"):
 		died.emit()
+		return
+
+	if Input.is_action_just_pressed("toggle_debug"):
+		GlobalState.toggle_debug()
+
+	_handle_abilities()
 
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.

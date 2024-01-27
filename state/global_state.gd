@@ -4,8 +4,13 @@ signal reset_best_score_signal
 
 const SCORE_FILE = "user://score.save"
 
+var debug: bool = false
 var new_best_score: bool = false
 var game_over_visible: bool = false
+
+
+func toggle_debug() -> void:
+	debug = !debug
 
 
 func get_best_score() -> int:
