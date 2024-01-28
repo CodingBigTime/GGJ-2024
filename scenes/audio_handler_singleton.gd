@@ -16,12 +16,12 @@ func play_sound(sound_name: String) -> void:
 	for player in players.get_children():
 		if player.playing:
 			continue
-		player.stream = load(SFX[sound_name])
+		player.stream = SFX[sound_name]
 		player.play()
 		return
 
 	var new_player = AudioStreamPlayer.new()
-	new_player.stream = load(sound_name)
+	new_player.stream = SFX[sound_name]
 	new_player.play()
 	players.add_child(new_player)
 
