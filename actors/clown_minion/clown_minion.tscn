@@ -8,13 +8,13 @@ radius = 0.2
 height = 1.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ln3f2"]
-radius = 5.0
+radius = 20.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_hs8oc"]
-radius = 0.75
 
 [node name="ClownMinion" type="CharacterBody3D"]
-collision_layer = 2
+collision_layer = 10
+collision_mask = 9
 script = ExtResource("1_m5ihq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -47,7 +47,10 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ConvertArea3D"]
 shape = SubResource("SphereShape3D_hs8oc")
 
+[node name="DebugLabel3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+billboard = 1
+texture_filter = 0
+
 [connection signal="timeout" from="LifetimeTimer" to="." method="_on_lifetime_timer_timeout"]
-[connection signal="body_entered" from="DetectionArea3D" to="." method="_on_area_3d_body_entered"]
-[connection signal="body_entered" from="DetectionArea3D" to="." method="_on_detection_area_3d_body_entered"]
 [connection signal="body_entered" from="ConvertArea3D" to="." method="_on_convert_area_3d_body_entered"]

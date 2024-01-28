@@ -8,7 +8,7 @@ enum State { IDLE, WONDER, FLEE, ATTACK }
 const WONDER_SPEED = 2.0
 const FLEE_SPEED = 3.0
 const FLEE_DISTANCE = 5.0
-const DESPAWN_DISTANCE = 20.0
+const DESPAWN_DISTANCE = 18.0
 
 const TEXTURES = {
 	"normal_up": preload("res://assets/sprites/villagers/villager_up.png"),
@@ -23,7 +23,7 @@ const TEXTURES = {
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-var player_position := Vector3()
+var player_position := Vector3.ZERO
 var marked_for_attack := false
 
 var state = State.IDLE
@@ -50,40 +50,49 @@ func _process(_delta: float):
 	$Sprite3D.texture = TEXTURES[ActorUtils.get_movement_string(Vector2(velocity.x, velocity.z))]
 
 
+func set_state(new_state: State):
+	match [new_state, self.state]:
+		[State.IDLE, ..]:
+			# Stop moving
+			self.velocity = Vector3.ZERO
+		[State.WONDER, State.WONDER]:
+			# Continue moving in the same direction, update speed
+			var direction = self.velocity.normalized()
+			self.velocity = direction * WONDER_SPEED
+		[State.WONDER, ..]:
+			# Choose a new random direction
+			var random_angle = randf_range(0, 2 * PI)
+			var direction = Vector3(cos(random_angle), 0, sin(random_angle))
+			self.velocity = direction * WONDER_SPEED
+		[State.FLEE, ..]:
+			# Move away from the player
+			var direction = self.position - player_position
+			direction = direction.normalized()
+			self.velocity = direction * self.FLEE_SPEED
+	self.state = new_state
+
+
 func _on_current_state_timer_timeout():
 	var distance_to_player = self.position.distance_to(player_position)
 	if distance_to_player > self.DESPAWN_DISTANCE:
 		queue_free()
 	elif distance_to_player < self.FLEE_DISTANCE:
-		state = State.FLEE
-	else:
-		match state:
-			State.IDLE:
-				if randf_range(0, 1) > 0.2:
-					state = State.WONDER
-					var random_angle = randf_range(0, 2 * PI)
-					var direction = Vector3(cos(random_angle), 0, sin(random_angle))
-					self.velocity = direction * self.WONDER_SPEED
-				else:
-					state = State.IDLE
-			State.WONDER:
-				if randf_range(0, 1) > 0.8:
-					state = State.IDLE
-				else:
-					state = State.WONDER
-			State.FLEE:
-				if randf_range(0, 1) > 0.5:
-					state = State.FLEE
-				else:
-					state = State.IDLE
-
-	match state:
-		State.IDLE:
-			self.velocity = Vector3()
-		State.FLEE:
-			var direction = self.position - player_position
-			direction = direction.normalized()
-			self.velocity = direction * self.FLEE_SPEED
+		self.set_state(State.FLEE)
+	elif self.state == State.IDLE:
+		if randf() > 0.2:
+			self.set_state(State.WONDER)
+		else:
+			self.set_state(State.IDLE)
+	elif self.state == State.WONDER:
+		if randf() > 0.8:
+			self.set_state(State.IDLE)
+		else:
+			self.set_state(State.WONDER)
+	elif self.state == State.FLEE:
+		if randf() > 0.5:
+			self.set_state(State.IDLE)
+		else:
+			self.set_state(State.FLEE)
 
 
 func mark_for_attack():

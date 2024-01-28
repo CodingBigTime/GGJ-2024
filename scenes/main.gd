@@ -73,7 +73,7 @@ func _on_spawn_villager(villager_scene: PackedScene, relative_spawn_position: Ve
 func _on_villager_died(villager: Villager):
 	# Convert villager to clown minion
 	self.score_label.increase_score(1)
-	var clown_minion = self.clown_minion_scene.instantiate()
+	var clown_minion: ClownMinion = self.clown_minion_scene.instantiate()
 	clown_minion.position = villager.position
 
 	self.devil_clown.position_updated.connect(clown_minion._update_player_pos)
