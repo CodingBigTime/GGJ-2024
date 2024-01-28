@@ -60,5 +60,4 @@ func _on_attack_timer_timeout():
 		debug_sphere.radius = self.SLAM_RADIUS
 		debug_sphere.position = self.position
 		get_parent().add_child(debug_sphere)
-	$HeavyAttackParticles.one_shot = true
-	$HeavyAttackParticles.emitting = true
+	$GPUParticles3D.emitting = true
