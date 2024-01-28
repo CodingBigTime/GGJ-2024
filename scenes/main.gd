@@ -3,8 +3,9 @@ extends Node3D
 var clown_minion_scene: PackedScene = preload("res://actors/clown_minion/clown_minion.tscn")
 var junk1: CompressedTexture2D = preload("res://assets/sprites/junk/junk_01.png")
 var junk2: CompressedTexture2D = preload("res://assets/sprites/junk/junk_02.png")
+var junk3: CompressedTexture2D = preload("res://assets/sprites/junk/junk_03.png")
 
-var junk_options: Array[CompressedTexture2D] = [junk1, junk2]
+var junk_options: Array[CompressedTexture2D] = [junk1, junk2, junk3]
 
 @onready var devil_clown = $DevilClown
 @onready var villager_factory = $DevilClown/VillagerFactory
