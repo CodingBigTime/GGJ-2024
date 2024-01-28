@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://cn6lce1nym2nc"]
+[gd_scene load_steps=7 format=3 uid="uid://cn6lce1nym2nc"]
 
 [ext_resource type="PackedScene" uid="uid://gk4h02yf37ek" path="res://scenes/ui/boost_bar.tscn" id="1_brtic"]
 [ext_resource type="PackedScene" uid="uid://b2egw5fjoaau4" path="res://scenes/ui/score_label.tscn" id="2_kl6ni"]
+[ext_resource type="PackedScene" uid="uid://bqqgrkplvfx6m" path="res://scenes/ui/spell.tscn" id="3_tj1w4"]
+[ext_resource type="Texture2D" uid="uid://fayu3qghayry" path="res://assets/sprites/balloon/blue_balloon.png" id="4_cugsh"]
+[ext_resource type="Texture2D" uid="uid://dhdt302mtx371" path="res://assets/ui/aoe.png" id="5_61yvy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kwgql"]
+font_size = 48
 
 [node name="MainHud" type="Control"]
 layout_mode = 3
@@ -50,3 +56,47 @@ alignment_vertical = 2
 
 [node name="ScoreLabel" parent="AspectRatioContainer2" instance=ExtResource("2_kl6ni")]
 layout_mode = 2
+
+[node name="AspectRatioContainer3" type="AspectRatioContainer" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 886.0
+offset_right = 164.0
+offset_bottom = 1000.0
+tooltip_text = "
+"
+alignment_horizontal = 0
+
+[node name="Spell" parent="AspectRatioContainer3" instance=ExtResource("3_tj1w4")]
+layout_mode = 2
+texture = ExtResource("4_cugsh")
+
+[node name="Label" type="Label" parent="AspectRatioContainer3"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+text = "1"
+label_settings = SubResource("LabelSettings_kwgql")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="AspectRatioContainer5" type="AspectRatioContainer" parent="."]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 886.0
+offset_right = 304.0
+offset_bottom = 1000.0
+tooltip_text = "
+"
+alignment_horizontal = 0
+
+[node name="Spell" parent="AspectRatioContainer5" instance=ExtResource("3_tj1w4")]
+layout_mode = 2
+texture = ExtResource("5_61yvy")
+
+[node name="Label" type="Label" parent="AspectRatioContainer5"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+text = "2"
+label_settings = SubResource("LabelSettings_kwgql")
+horizontal_alignment = 2
+vertical_alignment = 2

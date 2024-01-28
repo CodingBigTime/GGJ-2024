@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqqgrkplvfx6m"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_bsrst"]
+
+[node name="Spell" type="TextureRect"]
+texture = SubResource("ImageTexture_bsrst")
