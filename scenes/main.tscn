@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://lhi1oicjack5" path="res://actors/devil_clown/devil_clown.tscn" id="4_l66fv"]
 [ext_resource type="PackedScene" uid="uid://dcbnlcb87gw8x" path="res://factories/villager_factory.tscn" id="5_qa1ua"]
 [ext_resource type="PackedScene" uid="uid://bjn3r77l5fke7" path="res://scenes/world/world.tscn" id="6_vvr3l"]
-[ext_resource type="PackedScene" uid="uid://cn6lce1nym2nc" path="res://scenes/ui/main_ui.tscn" id="7_3cel7"]
+[ext_resource type="PackedScene" uid="uid://cn6lce1nym2nc" path="res://scenes/ui/main_hud.tscn" id="7_3cel7"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_qr7om")

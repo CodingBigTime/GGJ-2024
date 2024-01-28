@@ -1,9 +1,69 @@
-[gd_scene load_steps=4 format=3 uid="uid://htvnvue10bu7"]
+[gd_scene load_steps=14 format=3 uid="uid://htvnvue10bu7"]
 
 [ext_resource type="Script" path="res://objects/cymbals/cymbals_aoe.gd" id="1_1ej4t"]
-[ext_resource type="Texture2D" uid="uid://ch1urjux36k1l" path="res://assets/sprites/eye.png" id="2_mdlsk"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_dy3wc"]
+
+[sub_resource type="Curve" id="Curve_thn60"]
+_data = [Vector2(0.318841, 1), 0.0, 0.037444, 0, 0, Vector2(1, 0), -0.116652, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_p4wur"]
+curve = SubResource("Curve_thn60")
+
+[sub_resource type="Curve" id="Curve_vhfbs"]
+_data = [Vector2(0, 1), 0.0, -4.08284, 0, 0, Vector2(0.398551, 0), -3.14962, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_imu1l"]
+curve_y = SubResource("Curve_vhfbs")
+
+[sub_resource type="Curve" id="Curve_xq25e"]
+_data = [Vector2(0, 1), 0.0, 0.116652, 0, 0, Vector2(1, 0), -0.227473, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_5lx4k"]
+curve = SubResource("Curve_xq25e")
+
+[sub_resource type="Curve" id="Curve_ymcuj"]
+max_value = 40.0
+_data = [Vector2(0.181159, 40), 0.0, 56.0, 0, 0, Vector2(0.543478, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_44fr7"]
+curve = SubResource("Curve_ymcuj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ynklp"]
+inherit_velocity_ratio = 1.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_max = 4.0
+directional_velocity_min = 0.0
+directional_velocity_max = 8.0
+directional_velocity_curve = SubResource("CurveXYZTexture_imu1l")
+velocity_limit_curve = SubResource("CurveTexture_44fr7")
+gravity = Vector3(0, -20, 0)
+scale_max = 8.0
+scale_curve = SubResource("CurveTexture_5lx4k")
+alpha_curve = SubResource("CurveTexture_p4wur")
+hue_variation_min = -1.0
+hue_variation_max = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p65m8"]
+transparency = 4
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.827451, 0.529412, 0.862745, 1)
+texture_filter = 0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+proximity_fade_enabled = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_fvjf2"]
+material = SubResource("StandardMaterial3D_p65m8")
+size = Vector2(0.05, 0.05)
 
 [node name="CymbalsAoe" type="Area3D"]
 script = ExtResource("1_1ej4t")
@@ -12,16 +72,19 @@ script = ExtResource("1_1ej4t")
 shape = SubResource("SphereShape3D_dy3wc")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 1.5
 one_shot = true
 autostart = true
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -6.99382e-08, 1, 0, -1.6, -4.37114e-08, 0, 0, 0)
-modulate = Color(1, 1, 1, 0.235294)
-texture_filter = 0
-render_priority = -1
-texture = ExtResource("2_mdlsk")
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+custom_aabb = AABB(0.01, 0, 0.01, 0.02, 0.02, 0.02)
+amount = 1024
+lifetime = 0.75
+explosiveness = 1.0
+fixed_fps = 60
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_ynklp")
+draw_pass_1 = SubResource("QuadMesh_fvjf2")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
