@@ -31,6 +31,7 @@ func get_current_villagers() -> Array[Villager]:
 
 
 func _go_to_main_menu():
+	AudioHandlerSingleton.play_sound("game_over")
 	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
 
 

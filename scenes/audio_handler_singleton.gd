@@ -1,9 +1,13 @@
 extends Node
 
 const SFX = {
-	"convert": "res://assets/sfx/convert.wav",
-	"clown_die": "res://assets/sfx/clown_die.wav",
-	"splash": "res://assets/sfx/splash.wav"
+	"convert": preload("res://assets/sfx/convert.wav"),
+	"clown_die": preload("res://assets/sfx/clown_die.wav"),
+	"splash": preload("res://assets/sfx/splash.wav"),
+	"power_up": preload("res://assets/sfx/power_up.wav"),
+	"player_hurt": preload("res://assets/sfx/player_hurt.wav"),
+	"game_over": preload("res://assets/sfx/game_over.wav"),
+	"try_convert": preload("res://assets/sfx/try_convert.wav")
 }
 @onready var players = $AudioStreamPlayers
 

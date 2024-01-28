@@ -61,6 +61,8 @@ func _use_ability_2():
 	if not _try_boost(4):
 		return
 
+	AudioHandlerSingleton.play_sound("try_convert")
+
 	var cymbals_aoe = cymbals_aoe_scene.instantiate()
 	cymbals_aoe.position = self.position
 	cymbals_aoe.set_radius(self.CYMBALS_RADIUS)
@@ -152,10 +154,12 @@ func update_power(new_power: float) -> void:
 func _on_body_entered_area(body: Node3D):
 	if body.is_in_group("junk_items") and body.has_method("convert_power") and power < 20:
 		update_power(power + body.convert_power())
+		AudioHandlerSingleton.play_sound("power_up")
 		body.queue_free()
 
 
 func damage(amount: float) -> void:
 	self.power -= amount
+	AudioHandlerSingleton.play_sound("player_hurt")
 	if self.power < 0:
 		died.emit()
