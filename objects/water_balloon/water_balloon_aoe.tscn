@@ -60,6 +60,7 @@ material = SubResource("StandardMaterial3D_m585h")
 shape = 0
 
 [node name="WaterBalloonAoe" type="Area3D"]
+collision_mask = 2
 script = ExtResource("1_sk1w1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
