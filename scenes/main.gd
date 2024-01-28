@@ -18,7 +18,6 @@ func _ready():
 	self.devil_clown.throw_water_balloon.connect(self._on_player_throw_water_balloon)
 	self.devil_clown.hit_cymbals.connect(self._on_cymbals_hit)
 	self.devil_clown.power_change.connect(self.boost_bar.update_value)
-	print_debug(self.villager_factory)
 	self.villager_factory.spawn_villager.connect(self._on_spawn_villager)
 
 

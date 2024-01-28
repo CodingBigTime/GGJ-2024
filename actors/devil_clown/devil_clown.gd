@@ -92,7 +92,7 @@ func _physics_process(delta: float):
 	_handle_abilities()
 
 	var speed := self.SPEED
-	if Input.is_action_pressed("sprint"):
+	if GlobalState.debug and Input.is_action_pressed("sprint"):
 		speed = self.SPEED * 2
 
 	# Add the gravity.
