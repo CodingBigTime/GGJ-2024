@@ -61,3 +61,17 @@ static func random_3d_cylinder_point(
 
 static func random_from_array(array: Array):
 	return array[randi_range(0, array.size() - 1)]
+
+
+static func weighted_choice(choices: Array, weights: Array[float]):
+	var running_sum := 0.0
+	var random_value = randf_range(0.0, ArrayUtil.sum(weights))
+	for i in range(weights.size()):
+		var weight = weights[i]
+		print(i, " ", weight, " ", weights.size())
+		running_sum += weight
+		if random_value <= running_sum:
+			return choices[i]
+		print(random_value, " -= VS =- ", running_sum)
+	printerr("Failed to find a weighted choice")
+	return choices[weights.find(weights.size() - 1)]

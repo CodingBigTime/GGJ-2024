@@ -29,7 +29,9 @@ alignment_vertical = 2
 [node name="BoostBar" parent="AspectRatioContainer" instance=ExtResource("1_brtic")]
 layout_mode = 2
 nine_patch_stretch = true
-tint_progress = Color(0.329412, 0, 0.290196, 1)
+tint_under = Color(0.447059, 0.388235, 0.470588, 1)
+tint_over = Color(1, 0, 0.8, 1)
+tint_progress = Color(0.713726, 0.133333, 0.780392, 1)
 
 [node name="AspectRatioContainer2" type="AspectRatioContainer" parent="."]
 layout_mode = 1
