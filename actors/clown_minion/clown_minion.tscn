@@ -1,20 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://bsebbcagp1v0i"]
+[gd_scene load_steps=7 format=3 uid="uid://bsebbcagp1v0i"]
 
 [ext_resource type="Script" path="res://actors/clown_minion/clown_minion.gd" id="1_m5ihq"]
 [ext_resource type="Texture2D" uid="uid://molqs5x1geog" path="res://assets/sprites/clownie/clownie_down.png" id="2_fju3j"]
+[ext_resource type="PackedScene" uid="uid://b2xr0fnxcf0y8" path="res://actors/bobber_3d.tscn" id="3_su0c2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oxrd5"]
 radius = 0.2
 height = 1.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ln3f2"]
-radius = 5.0
+radius = 20.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_hs8oc"]
-radius = 0.75
 
 [node name="ClownMinion" type="CharacterBody3D"]
-collision_layer = 2
+collision_layer = 10
+collision_mask = 9
 script = ExtResource("1_m5ihq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -31,7 +32,7 @@ wait_time = 0.5
 autostart = true
 
 [node name="LifetimeTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 7.0
 one_shot = true
 autostart = true
 
@@ -47,7 +48,15 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ConvertArea3D"]
 shape = SubResource("SphereShape3D_hs8oc")
 
+[node name="DebugLabel3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+billboard = 1
+texture_filter = 0
+
+[node name="Bobber3D" parent="." node_paths=PackedStringArray("sprite", "physics_body") instance=ExtResource("3_su0c2")]
+wait_time = 0.2
+sprite = NodePath("../Sprite3D")
+physics_body = NodePath("..")
+
 [connection signal="timeout" from="LifetimeTimer" to="." method="_on_lifetime_timer_timeout"]
-[connection signal="body_entered" from="DetectionArea3D" to="." method="_on_area_3d_body_entered"]
-[connection signal="body_entered" from="DetectionArea3D" to="." method="_on_detection_area_3d_body_entered"]
 [connection signal="body_entered" from="ConvertArea3D" to="." method="_on_convert_area_3d_body_entered"]

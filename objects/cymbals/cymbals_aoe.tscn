@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://htvnvue10bu7"]
 
 [ext_resource type="Script" path="res://objects/cymbals/cymbals_aoe.gd" id="1_1ej4t"]
-[ext_resource type="PackedScene" uid="uid://bqrsdm1r8omt8" path="res://objects/particles/confetti.tscn" id="2_se84w"]
+[ext_resource type="PackedScene" uid="uid://bqrsdm1r8omt8" path="res://scenes/particles/confetti.tscn" id="2_se84w"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_dy3wc"]
 

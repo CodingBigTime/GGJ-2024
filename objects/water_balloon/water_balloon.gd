@@ -8,7 +8,7 @@ const VARIANTS = {
 	"gold": preload("res://assets/sprites/balloon/gold_balloon.png"),
 }
 
-var explosion_radius: float = 1
+var explosion_radius: float = 2
 var water_balloon_aoe_scene: PackedScene = preload(
 	"res://objects/water_balloon/water_balloon_aoe.tscn"
 )
