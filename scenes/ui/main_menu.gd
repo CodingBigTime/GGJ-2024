@@ -17,6 +17,7 @@ func _ready():
 
 
 func start_game():
+	GlobalState.current_game_score = 0
 	get_tree().change_scene_to_file(MAIN_SCENE_FILE)
 
 

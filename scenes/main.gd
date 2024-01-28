@@ -46,7 +46,7 @@ func _on_cymbals_hit(cymbals_aoe: CymbalsAoe):
 
 func _on_cymbals_hit_villager(villager: Villager):
 	if randf() < self.devil_clown.CYMBALS_CONVERT_CHANCE:
-		villager.die()
+		villager.damage(1)
 
 
 func _on_player_throw_water_balloon(water_balloon: WaterBalloon):
@@ -56,6 +56,10 @@ func _on_player_throw_water_balloon(water_balloon: WaterBalloon):
 
 func _spawn_tangerine(tangerine: Tangerine):
 	add_child(tangerine)
+
+
+func _slam_player(damage: float):
+	self.devil_clown.damage(damage)
 
 
 func _on_spawn_villager(villager_scene: PackedScene, relative_spawn_position: Vector3):
@@ -68,6 +72,8 @@ func _on_spawn_villager(villager_scene: PackedScene, relative_spawn_position: Ve
 	villager.died.connect(self._on_villager_died)
 	if villager.has_signal("throw_tangerine"):
 		villager.throw_tangerine.connect(self._spawn_tangerine)
+	if villager.has_signal("slam_player"):
+		villager.slam_player.connect(self._slam_player)
 	add_child(villager)
 
 

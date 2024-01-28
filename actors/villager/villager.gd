@@ -3,7 +3,7 @@ extends CharacterBody3D
 
 signal died(villager: Villager)
 
-enum State { IDLE, WANDER, FLEE, ATTACK }
+enum State { IDLE, WANDER, FLEE, CHASE, ATTACK }
 enum Type { NORMAL, RANGED, HEAVY }
 
 const CAN_ATTACK_TYPES = [Type.RANGED, Type.HEAVY]
@@ -30,17 +30,34 @@ const TEXTURES_RANGED = {
 	"right_down": preload("res://assets/sprites/villagers/ranged/villager_down_right.png"),
 }
 
+const TEXTURES_HEAVY = TEXTURES_NORMAL
+
+# const TEXTURES_HEAVY = {
+# 	"normal_up": preload("res://assets/sprites/villagers/heavy/villager_up.png"),
+# 	"normal_down": preload("res://assets/sprites/villagers/heavy/villager_down.png"),
+# 	"left_normal": preload("res://assets/sprites/villagers/heavy/villager_left.png"),
+# 	"right_normal": preload("res://assets/sprites/villagers/heavy/villager_right.png"),
+# 	"left_up": preload("res://assets/sprites/villagers/heavy/villager_up_left.png"),
+# 	"right_up": preload("res://assets/sprites/villagers/heavy/villager_up_right.png"),
+# 	"left_down": preload("res://assets/sprites/villagers/heavy/villager_down_left.png"),
+# 	"right_down": preload("res://assets/sprites/villagers/heavy/villager_down_right.png"),
+# }
+
 const TEXTURES = {
 	Type.NORMAL: TEXTURES_NORMAL,
 	Type.RANGED: TEXTURES_RANGED,
+	Type.HEAVY: TEXTURES_HEAVY,
 }
 
 @export var type: Type = Type.NORMAL
 @export var wander_speed = 2.0
 @export var flee_speed = 3.0
+@export var chase_speed := 4.0
 @export var flee_distance = 5.0
 @export var attack_distance = 10.0
 @export var despawn_distance = 18.0
+@export var chase_distance := 10.0
+@export var health: int = 1
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -69,7 +86,8 @@ func _physics_process(delta: float):
 		velocity.y -= gravity * delta
 
 	move_and_slide()
-	self.position.y = min(2, self.position.y)
+	if self.position.y > 2:
+		self.position.y = 1
 
 
 func _process(_delta: float):
@@ -101,6 +119,11 @@ func set_state(new_state: State):
 			var direction = self.position - player_position
 			direction = direction.normalized()
 			self.velocity = direction * self.flee_speed
+		[State.CHASE, ..]:
+			# Move towards the player
+			var direction = player_position - self.position
+			direction = direction.normalized()
+			self.velocity = direction * self.chase_speed
 		[State.ATTACK, ..]:
 			_attack()
 			self.velocity = Vector3.ZERO
@@ -117,6 +140,8 @@ func _on_current_state_timer_timeout():
 		self.set_state(State.WANDER)
 	elif self.can_attack() and distance_to_player < self.attack_distance:
 		self.set_state(State.ATTACK)
+	elif self.can_attack() and distance_to_player < self.chase_distance:
+		self.set_state(State.CHASE)
 	elif self.state == State.IDLE:
 		if randf() > 0.2:
 			self.set_state(State.WANDER)
@@ -142,3 +167,9 @@ func mark_for_attack():
 func die():
 	died.emit(self)
 	queue_free()
+
+
+func damage(amount: int):
+	self.health -= amount
+	if self.health <= 0:
+		self.die()

@@ -1,4 +1,3 @@
-class_name RangedVillager
 extends Villager
 
 signal throw_tangerine(tangerine: Tangerine)

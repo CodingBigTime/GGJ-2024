@@ -5,6 +5,7 @@ signal reset_best_score_signal
 const SCORE_FILE = "user://score.save"
 
 var debug: bool = false
+var current_game_score: int = 0
 var new_best_score: bool = false
 var game_over_visible: bool = false
 
@@ -38,6 +39,7 @@ func reset_best_score() -> void:
 
 
 func submit_new_score(new_score: int) -> void:
+	self.current_game_score = new_score
 	if new_score > get_best_score():
 		set_best_score(new_score)
 		new_best_score = true

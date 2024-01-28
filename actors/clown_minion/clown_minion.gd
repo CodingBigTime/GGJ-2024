@@ -45,7 +45,8 @@ func _physics_process(delta: float):
 		velocity.y -= gravity * delta
 
 	move_and_slide()
-	self.position.y = min(2, self.position.y)
+	if self.position.y > 2:
+		self.position.y = 1
 
 
 func _process(_delta: float):
@@ -213,7 +214,7 @@ func find_new_target():
 func _on_convert_area_3d_body_entered(body: Node3D):
 	if not body.is_in_group("villager"):
 		return
-	body.die()
+	body.damage(1)
 	self.current_target = null
 	self.set_state(State.CONVERT)
 	current_state_timer.start(0.5)

@@ -15,12 +15,12 @@ collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_lbpbe")
 type = 2
-health = 5
 chase_speed = 5.0
 flee_distance = 0.0
-chase_distance = 50.0
-attack_distance = 2.0
+attack_distance = 4.0
 despawn_distance = 50.0
+chase_distance = 50.0
+health = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["villager"]]
 shape = SubResource("CapsuleShape3D_qn5ys")

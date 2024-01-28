@@ -7,7 +7,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qn5ys"]
 height = 1.0
 
-[node name="Villager" type="CharacterBody3D" groups=["villager"]]
+[node name="Villager2" type="CharacterBody3D" groups=["villager"]]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_err7m")
