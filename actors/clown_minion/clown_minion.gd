@@ -145,6 +145,7 @@ func _on_current_state_timer_timeout():
 
 func die():
 	died.emit(self)
+	AudioHandlerSingleton.play_sound("clown_die")
 	queue_free()
 
 
