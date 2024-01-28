@@ -88,8 +88,7 @@ func _on_current_state_timer_timeout():
 
 func mark_for_attack():
 	marked_for_attack = true
-	$Mark.visible = true
-	$Sprite3D.visible = false
+	$Sprite3D.modulate = Color(0, 1, 1)
 
 
 func die():

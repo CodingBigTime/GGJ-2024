@@ -2,6 +2,9 @@ class_name ActorUtils
 
 
 static func get_movement_string(movement: Vector2) -> String:
+	if movement == Vector2(0, 0):
+		return "normal_down"
+
 	var angle = atan2(movement.y, movement.x)
 	var normalized = angle / (2 * PI)
 
