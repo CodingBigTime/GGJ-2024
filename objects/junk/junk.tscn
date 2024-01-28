@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://woyvmsdyy6f0"]
+
+[node name="Junk" type="Node3D" groups=["junk_items"]]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.02
+billboard = 1
+texture_filter = 0

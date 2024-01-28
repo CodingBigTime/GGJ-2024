@@ -1,12 +1,8 @@
 extends Node3D
 
 var clown_minion_scene: PackedScene = preload("res://actors/clown_minion/clown_minion.tscn")
+var junk_scene: PackedScene = preload("res://objects/junk/junk.tscn")
 var confetti_scene: PackedScene = preload("res://scenes/particles/confetti.tscn")
-var junk1: CompressedTexture2D = preload("res://assets/sprites/junk/junk_01.png")
-var junk2: CompressedTexture2D = preload("res://assets/sprites/junk/junk_02.png")
-var junk3: CompressedTexture2D = preload("res://assets/sprites/junk/junk_03.png")
-
-var junk_options: Array[CompressedTexture2D] = [junk1, junk2, junk3]
 
 @onready var devil_clown = $DevilClown
 @onready var villager_factory = $DevilClown/VillagerFactory
@@ -95,15 +91,8 @@ func _on_villager_died(villager: Villager):
 	return clown_minion
 
 
-func _on_clown_minion_died(clown_minion: ClownMinion):
+func _on_clown_minion_died(_clown_minion: ClownMinion):
 	# Convert clown minion to junk
-	var junk_texture = Random.random_from_array(self.junk_options)
-	var junk_sprite = Sprite3D.new()
-	junk_sprite.texture = junk_texture
-	junk_sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	junk_sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
-	junk_sprite.position = clown_minion.position
-	junk_sprite.pixel_size = 0.02
-	junk_sprite.add_to_group("junk_items")
+	var junk = junk_scene.instantiate()
 	# TODO: Add another particle effect
-	add_child(junk_sprite)
+	add_child(junk)
