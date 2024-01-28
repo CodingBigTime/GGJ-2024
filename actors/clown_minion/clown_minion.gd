@@ -45,6 +45,7 @@ func _physics_process(delta: float):
 		velocity.y -= gravity * delta
 
 	move_and_slide()
+	self.position.y = min(2, self.position.y)
 
 
 func _process(_delta: float):
