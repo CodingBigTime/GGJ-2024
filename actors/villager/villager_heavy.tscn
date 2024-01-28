@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://cicsht53ptd0c"]
+
+[ext_resource type="Script" path="res://actors/villager/villager_heavy.gd" id="1_lbpbe"]
+[ext_resource type="Texture2D" uid="uid://xmxywddgqd5t" path="res://assets/sprites/villagers/normal/villager_down.png" id="2_fakn5"]
+[ext_resource type="PackedScene" uid="uid://b2xr0fnxcf0y8" path="res://actors/bobber_3d.tscn" id="3_y2rwo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qn5ys"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0c8xj"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_eafdp"]
+
+[node name="Villager2" type="CharacterBody3D" groups=["villager"]]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_lbpbe")
+type = 2
+chase_speed = 5.0
+flee_distance = 0.0
+attack_distance = 4.0
+despawn_distance = 50.0
+chase_distance = 50.0
+health = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["villager"]]
+shape = SubResource("CapsuleShape3D_qn5ys")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+offset = Vector2(0, 16)
+pixel_size = 0.06
+billboard = 1
+shaded = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("2_fakn5")
+
+[node name="StateTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="Bobber3D" parent="." node_paths=PackedStringArray("sprite", "physics_body") instance=ExtResource("3_y2rwo")]
+wait_time = 0.2
+sprite = NodePath("../Sprite3D")
+physics_body = NodePath("..")
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 64
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_0c8xj")
+draw_pass_1 = SubResource("QuadMesh_eafdp")
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

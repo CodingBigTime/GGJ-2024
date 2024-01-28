@@ -2,17 +2,15 @@ extends CharacterBody3D
 
 signal died
 signal position_updated(position: Vector3)
-signal throw_water_balloon(
-	water_balloon_scene: PackedScene, position: Vector3, linear_velocity: Vector3
-)
+signal throw_water_balloon(water_balloon: WaterBalloon)
 signal hit_cymbals(cymbals_aoe: CymbalsAoe)
 signal power_change(new_power: float)
 
-const SPEED = 5.0
-const WATER_BALLOON_THROW_OFFSET = Vector3.ZERO
-const WATER_BALLOON_THROW_VELOCITY = 3.18
-const CYMBALS_RADIUS = 4
-const CYMBALS_CONVERT_CHANCE = 0.8
+const SPEED := 5.0
+const WATER_BALLOON_THROW_OFFSET := Vector3.ZERO
+const WATER_BALLOON_THROW_VELOCITY := 3.18
+const CYMBALS_RADIUS := 4
+const CYMBALS_CONVERT_CHANCE := 0.8
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -52,8 +50,11 @@ func _use_ability_1():
 		)
 		* (WATER_BALLOON_THROW_VELOCITY * sqrt(direction_vector_2d_flat.length()))
 	)
+	var water_balloon: Node3D = water_balloon_scene.instantiate()
 
-	throw_water_balloon.emit(water_balloon_scene, balloon_position, balloon_linear_velocity)
+	water_balloon.position = balloon_position
+	water_balloon.linear_velocity = balloon_linear_velocity
+	throw_water_balloon.emit(water_balloon)
 
 
 func _use_ability_2():
@@ -90,6 +91,10 @@ func _physics_process(delta: float):
 
 	_handle_abilities()
 
+	var speed := self.SPEED
+	if Input.is_action_pressed("sprint"):
+		speed = self.SPEED * 2
+
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -99,11 +104,11 @@ func _physics_process(delta: float):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var direction = transform.basis * Vector3(input_dir.x, 0, input_dir.y)
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		velocity.x = direction.x * speed
+		velocity.z = direction.z * speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.z = move_toward(velocity.z, 0, speed)
 
 	move_and_slide()
 
@@ -140,11 +145,17 @@ func _try_boost(cost: float) -> bool:
 
 
 func update_power(new_power: float) -> void:
-	power = clamp(new_power, 0, 20)
-	power_change.emit(power)
+	self.power = clamp(new_power, 0, 20)
+	power_change.emit(self.power)
 
 
 func _on_body_entered_area(body: Node3D):
 	if body.is_in_group("junk_items") and body.has_method("convert_power") and power < 20:
 		update_power(power + body.convert_power())
 		body.queue_free()
+
+
+func damage(amount: float) -> void:
+	self.power -= amount
+	if self.power < 0:
+		died.emit()

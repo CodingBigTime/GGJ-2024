@@ -45,7 +45,8 @@ func _physics_process(delta: float):
 		velocity.y -= gravity * delta
 
 	move_and_slide()
-	self.position.y = min(2, self.position.y)
+	if self.position.y > 2:
+		self.position.y = 1
 
 
 func _process(_delta: float):
@@ -93,7 +94,7 @@ func set_state(new_state: State):
 func _on_current_state_timer_timeout():
 	var distance_to_player = self.position.distance_to(self.player_position)
 	if distance_to_player > self.DESPAWN_DISTANCE:
-		_despawn()
+		die()
 		return
 
 	find_new_target()
@@ -145,8 +146,13 @@ func _on_current_state_timer_timeout():
 		self.set_state(State.IDLE)
 
 
+func die():
+	died.emit(self)
+	queue_free()
+
+
 func _on_lifetime_timer_timeout():
-	_despawn()
+	self.die()
 
 
 func _set_current_target(new_target: Villager):
@@ -208,12 +214,7 @@ func find_new_target():
 func _on_convert_area_3d_body_entered(body: Node3D):
 	if not body.is_in_group("villager"):
 		return
-	body.die()
+	body.damage(1)
 	self.current_target = null
 	self.set_state(State.CONVERT)
 	current_state_timer.start(0.5)
-
-
-func _despawn():
-	died.emit(self)
-	self.queue_free()

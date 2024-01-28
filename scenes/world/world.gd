@@ -98,7 +98,7 @@ func _ready():
 			tile.position.x = j * TILE_SIZE - WORLD_WIDTH_TILE * TILE_SIZE / 2
 			tile.position.z = i * TILE_SIZE - WORLD_HEIGHT_TILE * TILE_SIZE / 2
 			tile.get_node("StaticBody3D").add_to_group("ground")
-			tile.get_node("Sprite3D").render_priority = -2
+			# tile.get_node("Sprite3D").render_priority = -2
 			tile.scale = Vector3(2.01, 1, 2.01)
 			add_child(tile)
 

@@ -8,23 +8,26 @@ extends Timer
 
 var bobbed: bool = false
 var current_bob: float = 0.0
+var target_bob: float = 0.0
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float):
-	self.sprite.offset.y = lerp(
-		self.sprite.offset.y,
+	self.sprite.offset.y -= self.current_bob
+	self.current_bob = lerp(
 		self.current_bob,
+		self.target_bob,
 		self.bob_lerp_factor * delta * self.physics_body.velocity.length()
 	)
+	self.sprite.offset.y += self.current_bob
 
 
 func _on_timeout():
 	if self.physics_body.velocity.length_squared() < 0.1:
 		return
 	if self.bobbed:
-		self.current_bob = 0.0
+		self.target_bob = 0.0
 		self.bobbed = false
 	else:
-		self.current_bob = self.bob_offset_amount
+		self.target_bob = self.bob_offset_amount
 		self.bobbed = true

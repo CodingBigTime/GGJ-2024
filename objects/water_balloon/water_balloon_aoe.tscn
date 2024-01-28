@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://csiy2vk2fet77"]
+[gd_scene load_steps=17 format=3 uid="uid://csiy2vk2fet77"]
 
 [ext_resource type="Script" path="res://objects/water_balloon/water_balloon_aoe.gd" id="1_sk1w1"]
 [ext_resource type="Texture2D" uid="uid://csv86m4vjl5vk" path="res://assets/sprites/puddle.png" id="2_m36i7"]
@@ -21,6 +21,14 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_2q43w"]
 gradient = SubResource("Gradient_j32bb")
 
+[sub_resource type="Curve" id="Curve_7ud3r"]
+max_value = 5.0
+_data = [Vector2(0.476087, 0.773585), 0.0, -0.310898, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_wbqnw"]
+curve_y = SubResource("Curve_7ud3r")
+
 [sub_resource type="Curve" id="Curve_77ca0"]
 min_value = -2.23517e-10
 _data = [Vector2(0, 0.197802), 0.0, 0.0, 0, 0, Vector2(1, -2.23517e-10), 0.0, 0.0, 0, 0]
@@ -33,6 +41,9 @@ curve = SubResource("Curve_77ca0")
 spread = 180.0
 initial_velocity_min = -2.0
 initial_velocity_max = 2.0
+directional_velocity_min = 1.0
+directional_velocity_max = 1.0
+directional_velocity_curve = SubResource("CurveXYZTexture_wbqnw")
 scale_min = 0.5
 scale_max = 2.0
 scale_curve = SubResource("CurveTexture_ouddv")
@@ -71,11 +82,10 @@ one_shot = true
 autostart = true
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-offset = Vector2(0, 8)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.01, 0)
 pixel_size = 0.03
+alpha_cut = 2
 texture_filter = 0
-render_priority = -1
 texture = ExtResource("2_m36i7")
 
 [node name="Area3D" type="Area3D" parent="."]
@@ -85,7 +95,7 @@ collision_mask = 2
 shape = SubResource("SphereShape3D_5kitx")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
-amount = 128
+amount = 256
 lifetime = 0.75
 explosiveness = 1.0
 fixed_fps = 60

@@ -12,6 +12,12 @@ script = ExtResource("1_qr7om")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 20, 0)
+shadow_enabled = true
+shadow_opacity = 0.7
+directional_shadow_split_1 = 0.15
+directional_shadow_fade_start = 0.05
+directional_shadow_max_distance = 20.0
+directional_shadow_pancake_size = 80.0
 
 [node name="DevilClown" parent="." instance=ExtResource("4_l66fv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -22,6 +28,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
 projection = 1
 size = 15.0
+far = 50.0
 script = ExtResource("2_hrcrx")
 follow_target = NodePath("../DevilClown")
 
