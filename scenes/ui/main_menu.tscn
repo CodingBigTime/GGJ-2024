@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://0cy7htlt00s6"]
+[gd_scene load_steps=18 format=3 uid="uid://0cy7htlt00s6"]
 
 [ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="1_sdmyu"]
 [ext_resource type="Texture2D" uid="uid://cyrlccn34qbgx" path="res://assets/ui/background.png" id="2_aa2d2"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://c0ja4br2myjm1" path="res://assets/ui/buttons/exit_button_normal.png" id="6_rr77v"]
 [ext_resource type="Texture2D" uid="uid://devt8qijam78x" path="res://assets/ui/buttons/exit_button_pressed.png" id="7_igl8u"]
 [ext_resource type="Texture2D" uid="uid://dy5y5l14xceox" path="res://assets/ui/buttons/exit_button_hover.png" id="8_3rgo3"]
+[ext_resource type="Texture2D" uid="uid://cuoqw4ov41kfu" path="res://assets/ui/logo_01.png" id="9_10s5x"]
 [ext_resource type="Script" path="res://scenes/ui/best_score_label.gd" id="9_i60lb"]
 [ext_resource type="Script" path="res://scenes/ui/reset_score_button.gd" id="10_lj26a"]
 [ext_resource type="AudioStream" uid="uid://bm6bcuvl2fmgq" path="res://assets/sfx/button_press.wav" id="10_nue65"]
@@ -36,8 +37,8 @@ texture = ExtResource("2_aa2d2")
 [node name="HomeMenu" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 0
-offset_right = 1280.0
-offset_bottom = 720.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 theme_override_constants/margin_left = 80
 theme_override_constants/margin_right = 80
 
@@ -67,9 +68,11 @@ texture_normal = ExtResource("6_rr77v")
 texture_pressed = ExtResource("7_igl8u")
 texture_hover = ExtResource("8_3rgo3")
 
-[node name="EventLabel" type="Label" parent="HomeMenu/HSplitContainer/VBoxContainer"]
+[node name="cbt_logo" type="TextureRect" parent="HomeMenu/HSplitContainer/VBoxContainer"]
 layout_mode = 2
-text = "CBT Godot Template"
+texture = ExtResource("9_10s5x")
+expand_mode = 3
+stretch_mode = 2
 
 [node name="BestScoreLabel" type="Label" parent="HomeMenu/HSplitContainer/VBoxContainer"]
 layout_mode = 2
@@ -88,8 +91,8 @@ script = ExtResource("10_lj26a")
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HomeMenu/HSplitContainer/CenterContainer"]
+visible = false
 layout_mode = 2
-alignment = 1
 
 [node name="game_over" type="TextureRect" parent="HomeMenu/HSplitContainer/CenterContainer/VBoxContainer"]
 visible = false
@@ -100,10 +103,38 @@ stretch_mode = 5
 script = ExtResource("12_toh3p")
 
 [node name="logo" type="TextureRect" parent="HomeMenu/HSplitContainer/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(700, 500)
+custom_minimum_size = Vector2(600, 500)
 layout_mode = 2
 texture = ExtResource("13_ul7vp")
 stretch_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HomeMenu/HSplitContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HomeMenu/HSplitContainer/CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(435, 2.08165e-12)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HomeMenu/HSplitContainer/CenterContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="logo" type="TextureRect" parent="HomeMenu/HSplitContainer/CenterContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 125)
+layout_mode = 2
+texture = ExtResource("13_ul7vp")
+stretch_mode = 5
+
+[node name="game_over" type="TextureRect" parent="HomeMenu/HSplitContainer/CenterContainer/HBoxContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+texture = ExtResource("11_odnwc")
+stretch_mode = 5
+script = ExtResource("12_toh3p")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HomeMenu/HSplitContainer/CenterContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 100)
+layout_mode = 2
 
 [node name="ButtonDownSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_nue65")
