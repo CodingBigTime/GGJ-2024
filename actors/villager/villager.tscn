@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cnmrsna46w1wv"]
+[gd_scene load_steps=5 format=3 uid="uid://cnmrsna46w1wv"]
 
 [ext_resource type="Script" path="res://actors/villager/villager.gd" id="1_6ngkl"]
 [ext_resource type="Texture2D" uid="uid://gagiwffgfr61" path="res://assets/sprites/villagers/villager_down.png" id="2_7xt0v"]
+[ext_resource type="PackedScene" uid="uid://b2xr0fnxcf0y8" path="res://actors/bobber_3d.tscn" id="3_do24q"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qn5ys"]
 height = 1.5
@@ -23,3 +24,8 @@ texture = ExtResource("2_7xt0v")
 [node name="StateTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
+
+[node name="Bobber3D" parent="." node_paths=PackedStringArray("sprite", "physics_body") instance=ExtResource("3_do24q")]
+wait_time = 0.2
+sprite = NodePath("../Sprite3D")
+physics_body = NodePath("..")

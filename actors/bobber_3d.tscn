@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2xr0fnxcf0y8"]
+
+[ext_resource type="Script" path="res://actors/bobber_3d.gd" id="1_7x3ut"]
+
+[node name="Bobber3D" type="Timer"]
+autostart = true
+script = ExtResource("1_7x3ut")
+
+[connection signal="timeout" from="." to="." method="_on_timeout"]
