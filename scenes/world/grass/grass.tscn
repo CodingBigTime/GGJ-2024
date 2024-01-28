@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://w3ented1lhko"]
+
+[ext_resource type="Texture2D" uid="uid://mxdunjspi7md" path="res://assets/sprites/grass/grass.png" id="1_bp1r2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8kkm7"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_bp1r2")
+heightmap_scale = 5.105
+texture_filter = 0
+billboard_keep_scale = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m0krj"]
+material = SubResource("StandardMaterial3D_8kkm7")
+size = Vector2(1, 1)
+center_offset = Vector3(0, 0.5, 0)
+orientation = 2
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.166767, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+sorting_offset = 1.0
+sorting_use_aabb_center = false
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_m0krj")
