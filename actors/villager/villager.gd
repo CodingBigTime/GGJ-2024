@@ -30,18 +30,16 @@ const TEXTURES_RANGED = {
 	"right_down": preload("res://assets/sprites/villagers/ranged/villager_down_right.png"),
 }
 
-const TEXTURES_HEAVY = TEXTURES_NORMAL
-
-# const TEXTURES_HEAVY = {
-# 	"normal_up": preload("res://assets/sprites/villagers/heavy/villager_up.png"),
-# 	"normal_down": preload("res://assets/sprites/villagers/heavy/villager_down.png"),
-# 	"left_normal": preload("res://assets/sprites/villagers/heavy/villager_left.png"),
-# 	"right_normal": preload("res://assets/sprites/villagers/heavy/villager_right.png"),
-# 	"left_up": preload("res://assets/sprites/villagers/heavy/villager_up_left.png"),
-# 	"right_up": preload("res://assets/sprites/villagers/heavy/villager_up_right.png"),
-# 	"left_down": preload("res://assets/sprites/villagers/heavy/villager_down_left.png"),
-# 	"right_down": preload("res://assets/sprites/villagers/heavy/villager_down_right.png"),
-# }
+const TEXTURES_HEAVY = {
+	"normal_up": preload("res://assets/sprites/villagers/heavy/villager_up.png"),
+	"normal_down": preload("res://assets/sprites/villagers/heavy/villager_down.png"),
+	"left_normal": preload("res://assets/sprites/villagers/heavy/villager_left.png"),
+	"right_normal": preload("res://assets/sprites/villagers/heavy/villager_right.png"),
+	"left_up": preload("res://assets/sprites/villagers/heavy/villager_up_left.png"),
+	"right_up": preload("res://assets/sprites/villagers/heavy/villager_up_right.png"),
+	"left_down": preload("res://assets/sprites/villagers/heavy/villager_down_left.png"),
+	"right_down": preload("res://assets/sprites/villagers/heavy/villager_down_right.png"),
+}
 
 const TEXTURES = {
 	Type.NORMAL: TEXTURES_NORMAL,

@@ -30,7 +30,10 @@ func emit_spawn_villager():
 	var spawn_position = path_follow.position
 	spawn_position.y += 1
 	var villager_scene: PackedScene
-	if GlobalState.current_game_score >= current_score_threshold:
+	if (
+		GlobalState.current_game_score >= current_score_threshold
+		or Input.is_action_pressed("debug_spawn_mini_boss")
+	):
 		current_score_threshold += self.MINI_BOSS_SCORE_THRESHOLD
 		villager_scene = Random.weighted_choice(self.MINI_BOSSES, self.MINI_BOSS_SPAWN_WEIGHTS)
 	else:

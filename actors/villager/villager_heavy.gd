@@ -38,7 +38,7 @@ func _process(delta: float):
 			(
 				self.ATTACK_TIME
 				* delta
-				* (20.0 if self.slam_bob_direction == SlamBobDirection.DOWN else 5.0)
+				* (20.0 if self.slam_bob_direction == SlamBobDirection.DOWN else 5.5)
 			)
 		)
 		sprite.offset.y += self.current_bob_amount

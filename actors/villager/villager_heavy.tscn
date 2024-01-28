@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cicsht53ptd0c"]
 
 [ext_resource type="Script" path="res://actors/villager/villager_heavy.gd" id="1_lbpbe"]
-[ext_resource type="Texture2D" uid="uid://xmxywddgqd5t" path="res://assets/sprites/villagers/normal/villager_down.png" id="2_fakn5"]
+[ext_resource type="Texture2D" uid="uid://s7jkxsvjqmve" path="res://assets/sprites/villagers/heavy/villager_down.png" id="2_a8fgj"]
 [ext_resource type="PackedScene" uid="uid://b2xr0fnxcf0y8" path="res://actors/bobber_3d.tscn" id="3_y2rwo"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qn5ys"]
@@ -27,13 +27,13 @@ shape = SubResource("CapsuleShape3D_qn5ys")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-offset = Vector2(0, 16)
-pixel_size = 0.06
+offset = Vector2(0, 24)
+pixel_size = 0.04
 billboard = 1
 shaded = true
 alpha_cut = 1
 texture_filter = 0
-texture = ExtResource("2_fakn5")
+texture = ExtResource("2_a8fgj")
 
 [node name="StateTimer" type="Timer" parent="."]
 autostart = true
