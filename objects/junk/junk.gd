@@ -12,6 +12,17 @@ func _ready():
 	self.junk_type = Random.weighted_choice([0, 1, 2], [0.05, 0.2, 0.5])
 	$Sprite3D.texture = JUNK_OPTIONS[self.junk_type]
 
+	var tween = (
+		get_tree()
+		. create_tween()
+		. set_trans(Tween.TRANS_SINE)
+		. set_ease(Tween.EASE_IN_OUT)
+		. set_loops()
+	)
+	tween.tween_property($Sprite3D, "pixel_size", 0.015, 1)
+	tween.tween_property($Sprite3D, "pixel_size", 0.025, 1)
+	tween.play()
+
 
 func convert_power():
 	match self.junk_type:
