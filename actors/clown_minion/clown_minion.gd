@@ -93,7 +93,7 @@ func set_state(new_state: State):
 func _on_current_state_timer_timeout():
 	var distance_to_player = self.position.distance_to(self.player_position)
 	if distance_to_player > self.DESPAWN_DISTANCE:
-		queue_free()
+		_despawn()
 		return
 
 	find_new_target()
@@ -146,8 +146,7 @@ func _on_current_state_timer_timeout():
 
 
 func _on_lifetime_timer_timeout():
-	died.emit(self)
-	queue_free()
+	_despawn()
 
 
 func _set_current_target(new_target: Villager):
@@ -213,3 +212,8 @@ func _on_convert_area_3d_body_entered(body: Node3D):
 	self.current_target = null
 	self.set_state(State.CONVERT)
 	current_state_timer.start(0.5)
+
+
+func _despawn():
+	died.emit(self)
+	self.queue_free()

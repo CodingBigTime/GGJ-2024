@@ -5,6 +5,7 @@ const CLOWN_DROP_CHANCE = 0.4
 var clown_minion_scene: PackedScene = preload("res://actors/clown_minion/clown_minion.tscn")
 var junk_scene: PackedScene = preload("res://objects/junk/junk.tscn")
 var confetti_scene: PackedScene = preload("res://scenes/particles/confetti.tscn")
+var death_particles_scene: PackedScene = preload("res://scenes/particles/death_particles.tscn")
 
 @onready var devil_clown = $DevilClown
 @onready var villager_factory = $DevilClown/VillagerFactory
@@ -93,8 +94,10 @@ func _on_villager_died(villager: Villager):
 func _on_clown_minion_died(_clown_minion: ClownMinion):
 	# Convert clown minion to junk
 	if randf() > CLOWN_DROP_CHANCE:
-		return
-	var junk = junk_scene.instantiate()
-	junk.position = _clown_minion.position
-	# TODO: Add another particle effect
-	add_child(junk)
+		var junk = junk_scene.instantiate()
+		junk.position = _clown_minion.position
+		add_child(junk)
+	var smoke = death_particles_scene.instantiate()
+	smoke.position = _clown_minion.position
+	smoke.set_one_time()
+	add_child(smoke)

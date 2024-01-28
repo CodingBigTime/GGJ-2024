@@ -1,0 +1,61 @@
+[gd_scene load_steps=11 format=3 uid="uid://lpmntthtxnux"]
+
+[ext_resource type="Script" path="res://scenes/particles/death_particles.gd" id="1_pjiny"]
+
+[sub_resource type="Curve" id="Curve_wv7kt"]
+_data = [Vector2(0, 1), 0.0, -0.0741427, 0, 0, Vector2(0.614286, 0.659341), 0.0466203, 0.0466203, 0, 0, Vector2(1, 0), -1.31054, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_8isg6"]
+curve = SubResource("Curve_wv7kt")
+
+[sub_resource type="Curve" id="Curve_ewo0m"]
+_data = [Vector2(0.5, 1), 0.0, -0.0341882, 0, 0, Vector2(1, 0), -5.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0aruj"]
+curve = SubResource("Curve_ewo0m")
+
+[sub_resource type="Curve" id="Curve_ng5ni"]
+_data = [Vector2(0.264286, 1), 0.0, -0.107965, 0, 0, Vector2(0.728571, 0), -4.72527, 1.4, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8k0g3"]
+curve = SubResource("Curve_ng5ni")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wlswa"]
+direction = Vector3(0, 0, 0)
+initial_velocity_min = -3.0
+initial_velocity_max = 3.0
+velocity_limit_curve = SubResource("CurveTexture_8k0g3")
+scale_min = 0.1
+scale_curve = SubResource("CurveTexture_0aruj")
+alpha_curve = SubResource("CurveTexture_8isg6")
+hue_variation_min = -0.1
+hue_variation_max = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_giwkh"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.14902, 0.129412, 0.168627, 1)
+texture_filter = 0
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_caqlv"]
+material = SubResource("StandardMaterial3D_giwkh")
+size = Vector2(0.1, 0.15)
+
+[node name="DeathParticles" type="GPUParticles3D"]
+amount = 32
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_wlswa")
+draw_pass_1 = SubResource("QuadMesh_caqlv")
+script = ExtResource("1_pjiny")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_done"]
