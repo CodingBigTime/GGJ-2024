@@ -1,6 +1,7 @@
 extends Node3D
 
 var clown_minion_scene: PackedScene = preload("res://actors/clown_minion/clown_minion.tscn")
+var confetti_scene: PackedScene = preload("res://scenes/particles/confetti.tscn")
 var junk1: CompressedTexture2D = preload("res://assets/sprites/junk/junk_01.png")
 var junk2: CompressedTexture2D = preload("res://assets/sprites/junk/junk_02.png")
 var junk3: CompressedTexture2D = preload("res://assets/sprites/junk/junk_03.png")
@@ -83,7 +84,14 @@ func _on_villager_died(villager: Villager):
 	self.devil_clown.position_updated.connect(clown_minion._update_player_pos)
 	clown_minion.died.connect(self._on_clown_minion_died)
 	add_child(clown_minion)
-	# TODO: Add cloud or confetti particle effect
+
+	var confetti = confetti_scene.instantiate()
+	confetti.position = clown_minion.position
+	confetti.amount = 64
+	confetti.one_shot = true
+	confetti.emitting = true
+	add_child(confetti)
+
 	return clown_minion
 
 
@@ -95,7 +103,7 @@ func _on_clown_minion_died(clown_minion: ClownMinion):
 	junk_sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	junk_sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 	junk_sprite.position = clown_minion.position
-	junk_sprite.pixel_size = 0.03
+	junk_sprite.pixel_size = 0.02
 	junk_sprite.add_to_group("junk_items")
 	# TODO: Add another particle effect
 	add_child(junk_sprite)
