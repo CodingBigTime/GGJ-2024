@@ -29,6 +29,7 @@ func _attack():
 
 
 func _process(delta: float):
+	self.update_texture()
 	if self.is_attacking:
 		var sprite: Sprite3D = $Sprite3D
 		sprite.offset.y -= self.current_bob_amount

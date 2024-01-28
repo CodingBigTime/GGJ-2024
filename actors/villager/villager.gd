@@ -48,8 +48,8 @@ const TEXTURES = {
 }
 
 @export var type: Type = Type.NORMAL
-@export var wander_speed = 2.0
-@export var flee_speed = 3.0
+@export var wander_speed := 2.0
+@export var flee_speed := 3.0
 @export var chase_speed := 4.0
 @export var flee_distance = 5.0
 @export var attack_distance = 10.0
@@ -88,10 +88,14 @@ func _physics_process(delta: float):
 		self.position.y = 1
 
 
-func _process(_delta: float):
+func update_texture():
 	$Sprite3D.texture = TEXTURES[self.type][ActorUtils.get_movement_string(
 		Vector2(velocity.x, velocity.z)
 	)]
+
+
+func _process(_delta: float):
+	self.update_texture()
 
 
 func _attack():
@@ -99,6 +103,8 @@ func _attack():
 
 
 func set_state(new_state: State):
+	if self.is_queued_for_deletion():
+		return
 	match [new_state, self.state]:
 		[State.IDLE, ..]:
 			# Stop moving
@@ -106,12 +112,12 @@ func set_state(new_state: State):
 		[State.WANDER, State.WANDER]:
 			# Continue moving in the same direction, update speed
 			var direction = self.velocity.normalized()
-			self.velocity = direction * wander_speed
+			self.velocity = direction * self.wander_speed
 		[State.WANDER, ..]:
 			# Choose a new random direction
 			var random_angle = randf_range(0, 2 * PI)
 			var direction = Vector3(cos(random_angle), 0, sin(random_angle))
-			self.velocity = direction * wander_speed
+			self.velocity = direction * self.wander_speed
 		[State.FLEE, ..]:
 			# Move away from the player
 			var direction = self.position - player_position
