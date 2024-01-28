@@ -3,9 +3,9 @@ extends CharacterBody3D
 
 signal died(clown_minion: ClownMinion)
 
-enum State { IDLE, WONDER, FOLLOW, ATTACK, CONVERT }
+enum State { IDLE, WANDER, FOLLOW, ATTACK, CONVERT }
 
-const WONDER_SPEED = 2.0
+const WANDER_SPEED = 2.0
 const FOLLOW_SPEED = 6.0
 const ATTACK_SPEED = 6.0
 const FOLLOW_DISTANCE = 5.0
@@ -64,15 +64,15 @@ func set_state(new_state: State):
 			# Move away from the player
 			var direction = (self.player_position - self.position).normalized()
 			self.velocity = direction * self.FOLLOW_SPEED
-		[State.WONDER, State.WONDER]:
+		[State.WANDER, State.WANDER]:
 			# Continue moving in the same direction, update speed
 			var direction = self.velocity.normalized()
-			self.velocity = direction * WONDER_SPEED
-		[State.WONDER, ..]:
+			self.velocity = direction * WANDER_SPEED
+		[State.WANDER, ..]:
 			# Choose a new random direction
 			var random_angle = randf_range(0, 2 * PI)
 			var direction = Vector3(cos(random_angle), 0, sin(random_angle))
-			self.velocity = direction * WONDER_SPEED
+			self.velocity = direction * WANDER_SPEED
 		[State.ATTACK, ..]:
 			# Move towards the target
 			if is_instance_valid(self.current_target):
@@ -124,15 +124,15 @@ func _on_current_state_timer_timeout():
 		# change to follow state
 		self.set_state(State.FOLLOW)
 	elif self.state in [State.IDLE, State.CONVERT]:
-		# Go to wonder state
-		self.set_state(State.WONDER)
-	elif self.state == State.WONDER:
+		# Go to WANDER state
+		self.set_state(State.WANDER)
+	elif self.state == State.WANDER:
 		if randf() > 0.8:
 			# Chance to go to idle state
 			self.set_state(State.IDLE)
 		else:
-			# Continue to wonder in the same direction
-			self.set_state(State.WONDER)
+			# Continue to WANDER in the same direction
+			self.set_state(State.WANDER)
 	elif self.state == State.FOLLOW:
 		if distance_to_player < 1 or randf() > 0.5:
 			# Stop following and go to idle state

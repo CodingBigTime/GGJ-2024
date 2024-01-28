@@ -3,9 +3,9 @@ extends CharacterBody3D
 
 signal died(villager: Villager)
 
-enum State { IDLE, WONDER, FLEE, ATTACK }
+enum State { IDLE, WANDER, FLEE, ATTACK }
 
-const WONDER_SPEED = 2.0
+const WANDER_SPEED = 2.0
 const FLEE_SPEED = 3.0
 const FLEE_DISTANCE = 5.0
 const DESPAWN_DISTANCE = 18.0
@@ -55,15 +55,15 @@ func set_state(new_state: State):
 		[State.IDLE, ..]:
 			# Stop moving
 			self.velocity = Vector3.ZERO
-		[State.WONDER, State.WONDER]:
+		[State.WANDER, State.WANDER]:
 			# Continue moving in the same direction, update speed
 			var direction = self.velocity.normalized()
-			self.velocity = direction * WONDER_SPEED
-		[State.WONDER, ..]:
+			self.velocity = direction * WANDER_SPEED
+		[State.WANDER, ..]:
 			# Choose a new random direction
 			var random_angle = randf_range(0, 2 * PI)
 			var direction = Vector3(cos(random_angle), 0, sin(random_angle))
-			self.velocity = direction * WONDER_SPEED
+			self.velocity = direction * WANDER_SPEED
 		[State.FLEE, ..]:
 			# Move away from the player
 			var direction = self.position - player_position
@@ -80,14 +80,14 @@ func _on_current_state_timer_timeout():
 		self.set_state(State.FLEE)
 	elif self.state == State.IDLE:
 		if randf() > 0.2:
-			self.set_state(State.WONDER)
+			self.set_state(State.WANDER)
 		else:
 			self.set_state(State.IDLE)
-	elif self.state == State.WONDER:
+	elif self.state == State.WANDER:
 		if randf() > 0.8:
 			self.set_state(State.IDLE)
 		else:
-			self.set_state(State.WONDER)
+			self.set_state(State.WANDER)
 	elif self.state == State.FLEE:
 		if randf() > 0.5:
 			self.set_state(State.IDLE)
