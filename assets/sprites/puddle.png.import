@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ch1urjux36k1l"
-path="res://.godot/imported/eye.png-5185ed999e736ecd6f8a37c7e87fba86.ctex"
+uid="uid://csv86m4vjl5vk"
+path="res://.godot/imported/puddle.png-ff353cb8b9d6def2a62ddec9f544591c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/eye.png"
-dest_files=["res://.godot/imported/eye.png-5185ed999e736ecd6f8a37c7e87fba86.ctex"]
+source_file="res://assets/sprites/puddle.png"
+dest_files=["res://.godot/imported/puddle.png-ff353cb8b9d6def2a62ddec9f544591c.ctex"]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://csiy2vk2fet77"]
 
-[ext_resource type="Texture2D" uid="uid://dmqe425200dgb" path="res://assets/sprites/junk/junk1.png" id="1_dsyib"]
 [ext_resource type="Script" path="res://objects/water_balloon/water_balloon_aoe.gd" id="1_sk1w1"]
+[ext_resource type="Texture2D" uid="uid://csv86m4vjl5vk" path="res://assets/sprites/puddle.png" id="2_m36i7"]
 [ext_resource type="Texture2D" uid="uid://on68qisjvqk1" path="res://assets/sprites/water_droplet.png" id="3_w6nye"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_x2g6s"]
@@ -30,7 +30,6 @@ point_count = 2
 curve = SubResource("Curve_77ca0")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8ksch"]
-emission_shape_offset = Vector3(0, -0.5, 0)
 spread = 180.0
 initial_velocity_min = -2.0
 initial_velocity_max = 2.0
@@ -73,9 +72,11 @@ autostart = true
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+offset = Vector2(0, 8)
+pixel_size = 0.03
 texture_filter = 0
 render_priority = -1
-texture = ExtResource("1_dsyib")
+texture = ExtResource("2_m36i7")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_mask = 2

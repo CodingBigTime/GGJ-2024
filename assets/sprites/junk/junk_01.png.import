@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdcmqr0280bra"
-path="res://.godot/imported/junk2.png-831f93b9e573e6f71701e624aba93747.ctex"
+uid="uid://dmqe425200dgb"
+path="res://.godot/imported/junk_01.png-56b1d23a64ac51ff33f1ec03f5c689c7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/junk/junk2.png"
-dest_files=["res://.godot/imported/junk2.png-831f93b9e573e6f71701e624aba93747.ctex"]
+source_file="res://assets/sprites/junk/junk_01.png"
+dest_files=["res://.godot/imported/junk_01.png-56b1d23a64ac51ff33f1ec03f5c689c7.ctex"]
 
 [params]
 
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

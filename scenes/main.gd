@@ -1,8 +1,8 @@
 extends Node3D
 
 var clown_minion_scene: PackedScene = preload("res://actors/clown_minion/clown_minion.tscn")
-var junk1: CompressedTexture2D = preload("res://assets/sprites/junk/junk1.png")
-var junk2: CompressedTexture2D = preload("res://assets/sprites/junk/junk2.png")
+var junk1: CompressedTexture2D = preload("res://assets/sprites/junk/junk_01.png")
+var junk2: CompressedTexture2D = preload("res://assets/sprites/junk/junk_02.png")
 
 var junk_options: Array[CompressedTexture2D] = [junk1, junk2]
 
@@ -94,6 +94,7 @@ func _on_clown_minion_died(clown_minion: ClownMinion):
 	junk_sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	junk_sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 	junk_sprite.position = clown_minion.position
+	junk_sprite.pixel_size = 0.03
 	junk_sprite.add_to_group("junk_items")
 	# TODO: Add another particle effect
 	add_child(junk_sprite)
