@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csaarxl623x4d"
-path="res://.godot/imported/clown_left.png-02f67e04b51eba81e208e25f90c1c919.ctex"
+uid="uid://0eomx4rq4gry"
+path="res://.godot/imported/clown_right_down_4.png-881baf3817535e7680d21360f7545641.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/clown/clown_left.png"
-dest_files=["res://.godot/imported/clown_left.png-02f67e04b51eba81e208e25f90c1c919.ctex"]
+source_file="res://assets/sprites/clown/clown_right_down_4.png"
+dest_files=["res://.godot/imported/clown_right_down_4.png-881baf3817535e7680d21360f7545641.ctex"]
 
 [params]
 

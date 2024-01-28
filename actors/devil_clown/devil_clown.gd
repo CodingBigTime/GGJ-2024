@@ -14,17 +14,6 @@ const WATER_BALLOON_THROW_VELOCITY = 3.18
 const CYMBALS_RADIUS = 4
 const CYMBALS_CONVERT_CHANCE = 0.8
 
-const TEXTURES = {
-	"normal_up": preload("res://assets/sprites/clown/clown_up.png"),
-	"normal_down": preload("res://assets/sprites/clown/clown_down.png"),
-	"left_normal": preload("res://assets/sprites/clown/clown_left.png"),
-	"right_normal": preload("res://assets/sprites/clown/clown_right.png"),
-	"left_up": preload("res://assets/sprites/clown/clown_left_up.png"),
-	"right_up": preload("res://assets/sprites/clown/clown_right_up.png"),
-	"left_down": preload("res://assets/sprites/clown/clown_left_down.png"),
-	"right_down": preload("res://assets/sprites/clown/clown_right_down.png"),
-}
-
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var water_balloon_scene = preload("res://objects/water_balloon/water_balloon.tscn")
@@ -123,7 +112,14 @@ func _process(_delta: float):
 	# Change the player image based on the direction.
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
-	$Sprite3D.texture = TEXTURES[ActorUtils.get_movement_string(input_dir)]
+	$Sprite3D.animation = ActorUtils.get_movement_string(input_dir)
+
+	if input_dir != Vector2.ZERO:
+		$Sprite3D.play()
+	else:
+		$Sprite3D.stop()
+		$Sprite3D.frame = 0
+
 	power_change.emit(power)
 
 
