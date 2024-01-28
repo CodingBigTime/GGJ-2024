@@ -5,15 +5,15 @@
 [ext_resource type="PackedScene" uid="uid://b2xr0fnxcf0y8" path="res://actors/bobber_3d.tscn" id="3_su0c2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oxrd5"]
-radius = 0.2
-height = 1.5
+radius = 0.3
+height = 1.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ln3f2"]
 radius = 20.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_hs8oc"]
 
-[node name="ClownMinion" type="CharacterBody3D"]
+[node name="ClownMinion" type="CharacterBody3D" groups=["minion"]]
 collision_layer = 10
 collision_mask = 9
 script = ExtResource("1_m5ihq")
@@ -22,8 +22,12 @@ script = ExtResource("1_m5ihq")
 shape = SubResource("CapsuleShape3D_oxrd5")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+offset = Vector2(0, 16)
 pixel_size = 0.03
 billboard = 1
+shaded = true
+alpha_cut = 1
 texture_filter = 0
 texture = ExtResource("2_fju3j")
 

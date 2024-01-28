@@ -10,9 +10,10 @@ size = Vector3(10, 0.1, 10)
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(3.9, 0, 0, 0, -1.70474e-07, 3.9, 0, -3.9, -1.70474e-07, 0, 0, 0)
+shaded = true
 double_sided = false
+alpha_cut = 1
 texture_filter = 0
-render_priority = -1
 texture = ExtResource("1_8i2tk")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]

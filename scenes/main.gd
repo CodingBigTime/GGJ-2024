@@ -49,15 +49,13 @@ func _on_cymbals_hit_villager(villager: Villager):
 		villager.die()
 
 
-func _on_player_throw_water_balloon(
-	water_balloon_scene: PackedScene, balloon_position: Vector3, balloon_linear_velocity: Vector3
-):
-	var water_balloon: Node3D = water_balloon_scene.instantiate()
-
-	water_balloon.position = balloon_position
-	water_balloon.linear_velocity = balloon_linear_velocity
+func _on_player_throw_water_balloon(water_balloon: WaterBalloon):
 	water_balloon.explode.connect(self._on_water_balloon_explode)
 	add_child(water_balloon)
+
+
+func _spawn_tangerine(tangerine: Tangerine):
+	add_child(tangerine)
 
 
 func _on_spawn_villager(villager_scene: PackedScene, relative_spawn_position: Vector3):
@@ -68,6 +66,8 @@ func _on_spawn_villager(villager_scene: PackedScene, relative_spawn_position: Ve
 	self.devil_clown.position_updated.connect(villager._update_player_pos)
 	villager.position = self.devil_clown.position + relative_spawn_position
 	villager.died.connect(self._on_villager_died)
+	if villager.has_signal("throw_tangerine"):
+		villager.throw_tangerine.connect(self._spawn_tangerine)
 	add_child(villager)
 
 
@@ -96,6 +96,7 @@ func _on_clown_minion_died(_clown_minion: ClownMinion):
 	if randf() > CLOWN_DROP_CHANCE:
 		var junk = junk_scene.instantiate()
 		junk.position = _clown_minion.position
+		junk.position.y = 0
 		add_child(junk)
 	var smoke = death_particles_scene.instantiate()
 	smoke.position = _clown_minion.position

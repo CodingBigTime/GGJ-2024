@@ -6,10 +6,7 @@ signal died(villager: Villager)
 enum State { IDLE, WANDER, FLEE, ATTACK }
 enum Type { NORMAL, RANGED, HEAVY }
 
-const WANDER_SPEED = 2.0
-const FLEE_SPEED = 3.0
-const FLEE_DISTANCE = 5.0
-const DESPAWN_DISTANCE = 18.0
+const CAN_ATTACK_TYPES = [Type.RANGED, Type.HEAVY]
 
 const TEXTURES_NORMAL = {
 	"normal_up": preload("res://assets/sprites/villagers/normal/villager_up.png"),
@@ -39,6 +36,11 @@ const TEXTURES = {
 }
 
 @export var type: Type = Type.NORMAL
+@export var wander_speed = 2.0
+@export var flee_speed = 3.0
+@export var flee_distance = 5.0
+@export var attack_distance = 10.0
+@export var despawn_distance = 18.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -48,6 +50,10 @@ var marked_for_attack := false
 var state = State.IDLE
 
 @onready var current_state_timer: Timer = $StateTimer
+
+
+func can_attack():
+	return CAN_ATTACK_TYPES.has(self.type)
 
 
 func _update_player_pos(player_pos: Vector3):
@@ -72,6 +78,10 @@ func _process(_delta: float):
 	)]
 
 
+func _attack():
+	printerr("Normal villagers can't attack!")
+
+
 func set_state(new_state: State):
 	match [new_state, self.state]:
 		[State.IDLE, ..]:
@@ -80,26 +90,33 @@ func set_state(new_state: State):
 		[State.WANDER, State.WANDER]:
 			# Continue moving in the same direction, update speed
 			var direction = self.velocity.normalized()
-			self.velocity = direction * WANDER_SPEED
+			self.velocity = direction * wander_speed
 		[State.WANDER, ..]:
 			# Choose a new random direction
 			var random_angle = randf_range(0, 2 * PI)
 			var direction = Vector3(cos(random_angle), 0, sin(random_angle))
-			self.velocity = direction * WANDER_SPEED
+			self.velocity = direction * wander_speed
 		[State.FLEE, ..]:
 			# Move away from the player
 			var direction = self.position - player_position
 			direction = direction.normalized()
-			self.velocity = direction * self.FLEE_SPEED
+			self.velocity = direction * self.flee_speed
+		[State.ATTACK, ..]:
+			_attack()
+			self.velocity = Vector3.ZERO
 	self.state = new_state
 
 
 func _on_current_state_timer_timeout():
 	var distance_to_player = self.position.distance_to(player_position)
-	if distance_to_player > self.DESPAWN_DISTANCE:
+	if distance_to_player > self.despawn_distance:
 		queue_free()
-	elif distance_to_player < self.FLEE_DISTANCE:
+	elif distance_to_player < self.flee_distance:
 		self.set_state(State.FLEE)
+	elif self.state == State.ATTACK:
+		self.set_state(State.WANDER)
+	elif self.can_attack() and distance_to_player < self.attack_distance:
+		self.set_state(State.ATTACK)
 	elif self.state == State.IDLE:
 		if randf() > 0.2:
 			self.set_state(State.WANDER)

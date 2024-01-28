@@ -1,24 +1,29 @@
 [gd_scene load_steps=5 format=3 uid="uid://cyvq4aa4vyi1b"]
 
-[ext_resource type="Script" path="res://actors/villager/villager.gd" id="1_kxt4g"]
+[ext_resource type="Script" path="res://actors/villager/villager_ranged.gd" id="1_err7m"]
 [ext_resource type="Texture2D" uid="uid://lube2pdly25h" path="res://assets/sprites/villagers/ranged/villager_down.png" id="2_odp1h"]
 [ext_resource type="PackedScene" uid="uid://b2xr0fnxcf0y8" path="res://actors/bobber_3d.tscn" id="3_66inf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qn5ys"]
-height = 1.5
+height = 1.0
 
 [node name="Villager" type="CharacterBody3D" groups=["villager"]]
 collision_layer = 2
 collision_mask = 3
-script = ExtResource("1_kxt4g")
+script = ExtResource("1_err7m")
 type = 1
+flee_distance = 3.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["villager"]]
 shape = SubResource("CapsuleShape3D_qn5ys")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+offset = Vector2(0, 16)
 pixel_size = 0.03
 billboard = 1
+shaded = true
+alpha_cut = 1
 texture_filter = 0
 texture = ExtResource("2_odp1h")
 

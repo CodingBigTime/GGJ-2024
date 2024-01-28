@@ -160,8 +160,12 @@ collision_layer = 3
 script = ExtResource("1_metc8")
 
 [node name="Sprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75, 0)
+offset = Vector2(0, 24)
 pixel_size = 0.04
 billboard = 1
+shaded = true
+alpha_cut = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_p086g")
 animation = &"left_down"
