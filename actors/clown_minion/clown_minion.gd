@@ -2,16 +2,13 @@ class_name ClownMinion
 extends CharacterBody3D
 
 signal died(clown_minion: ClownMinion)
-
 enum State { IDLE, WANDER, FOLLOW, ATTACK, CONVERT }
-
 const WANDER_SPEED = 2.0
 const FOLLOW_SPEED = 6.0
 const ATTACK_SPEED = 6.0
 const FOLLOW_DISTANCE = 5.0
 const ATTACK_STOP_DISTANCE = 6.0
 const DESPAWN_DISTANCE = 50.0
-
 const TEXTURES = {
 	"normal_up": preload("res://assets/sprites/clownie/clownie_up.png"),
 	"normal_down": preload("res://assets/sprites/clownie/clownie_down.png"),
@@ -26,8 +23,8 @@ const TEXTURES = {
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var player_position := Vector3.ZERO
 var current_target: Villager = null
-
 var state: State = State.IDLE
+
 @onready var current_state_timer: Timer = $StateTimer
 @onready var debug_label: Label3D = $DebugLabel3D
 

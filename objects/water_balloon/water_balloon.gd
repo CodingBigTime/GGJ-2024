@@ -28,4 +28,7 @@ func _on_area_3d_body_entered(body: Node3D):
 		water_balloon_aoe.position.y = 0
 		water_balloon_aoe.set_radius(explosion_radius)
 		explode.emit(water_balloon_aoe)
+
+		AudioHandlerSingleton.play_sound("splash")
+
 		queue_free()

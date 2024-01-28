@@ -94,6 +94,8 @@ func _on_villager_died(villager: Villager):
 	confetti.emitting = true
 	add_child(confetti)
 
+	AudioHandlerSingleton.play_sound("convert")
+
 	return clown_minion
 
 
