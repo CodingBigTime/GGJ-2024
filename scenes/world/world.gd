@@ -19,8 +19,8 @@ const TILES = {
 	"1111": preload("res://scenes/world/tiles/tile_1111.tscn"),
 }
 
-const WORLD_WIDTH_TILE = 5
-const WORLD_HEIGHT_TILE = 5
+const WORLD_WIDTH_TILE = 50
+const WORLD_HEIGHT_TILE = 50
 
 const TILE_SIZE = 20
 
