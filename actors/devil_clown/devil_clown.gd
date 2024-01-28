@@ -48,6 +48,10 @@ func _use_ability_1():
 	var mouse_3d_position = _get_mouse_3d_position()
 	if not mouse_3d_position:
 		return
+
+	if not _try_boost(0.5):
+		return
+
 	var balloon_position = self.position + WATER_BALLOON_THROW_OFFSET
 	var direction_vector = mouse_3d_position - self.position
 	var direction_vector_2d_flat = Vector3(direction_vector.x, 0, direction_vector.z)
@@ -59,29 +63,31 @@ func _use_ability_1():
 		)
 		* (WATER_BALLOON_THROW_VELOCITY * sqrt(direction_vector_2d_flat.length()))
 	)
+
 	throw_water_balloon.emit(water_balloon_scene, balloon_position, balloon_linear_velocity)
 
 
 func _use_ability_2():
+	if not _try_boost(4):
+		return
+
 	var cymbals_aoe = cymbals_aoe_scene.instantiate()
 	cymbals_aoe.position = self.position
 	cymbals_aoe.set_radius(self.CYMBALS_RADIUS)
+
 	if GlobalState.debug:
 		var debug_sphere = CSGSphere3D.new()
 		debug_sphere.radius = self.CYMBALS_RADIUS
 		cymbals_aoe.add_child(debug_sphere)
+
 	hit_cymbals.emit(cymbals_aoe)
 
 
 func _handle_abilities():
 	if Input.is_action_just_pressed("use_ability_1"):
-		if check_power_boost_cost(0.2):
-			_use_ability_1()
-			use_power(0.2)
+		_use_ability_1()
 	if Input.is_action_just_pressed("use_ability_2"):
-		if check_power_boost_cost(0.5):
-			_use_ability_2()
-			use_power(0.5)
+		_use_ability_2()
 
 
 func _physics_process(delta: float):
@@ -126,15 +132,23 @@ func use_power(cost: float) -> void:
 	power_change.emit(power)
 
 
-func check_power_boost_cost(cost: float) -> bool:
-	if power >= cost:
+func can_power_boost(cost: float) -> bool:
+	return power >= cost
+
+
+func _try_boost(cost: float) -> bool:
+	if can_power_boost(cost):
+		use_power(cost)
 		return true
 	return false
 
 
-func _on_body_entered(body: Node3D):
-	print(body)
-	if body.is_in_group("junk_items") && body.texture == "branch":
-		print(body)
-		power += 5
+func update_power(new_power: float) -> void:
+	power = clamp(new_power, 0, 20)
+	power_change.emit(power)
+
+
+func _on_body_entered_area(body: Node3D):
+	if body.is_in_group("junk_items") and body.has_method("convert_power") and power < 20:
+		update_power(power + body.convert_power())
 		body.queue_free()

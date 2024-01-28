@@ -34,17 +34,14 @@ func _go_to_main_menu():
 
 func _on_water_balloon_explode(water_balloon_aoe: WaterBalloonAoe):
 	add_child(water_balloon_aoe)
-	print("Water balloon explode: ", water_balloon_aoe.position)
 
 
 func _on_cymbals_hit(cymbals_aoe: CymbalsAoe):
 	add_child(cymbals_aoe)
-	print("Cymbals hit: ", cymbals_aoe.position)
 	cymbals_aoe.hit_villager.connect(self._on_cymbals_hit_villager)
 
 
 func _on_cymbals_hit_villager(villager: Villager):
-	print("Cymbals hit villager: ", villager.position)
 	if randf() < self.devil_clown.CYMBALS_CONVERT_CHANCE:
 		villager.die()
 
@@ -94,5 +91,6 @@ func _on_villager_died(villager: Villager):
 func _on_clown_minion_died(_clown_minion: ClownMinion):
 	# Convert clown minion to junk
 	var junk = junk_scene.instantiate()
+	junk.position = _clown_minion.position
 	# TODO: Add another particle effect
 	add_child(junk)
