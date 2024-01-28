@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bugpw2bjees06"]
+[gd_scene load_steps=5 format=3 uid="uid://cyvq4aa4vyi1b"]
 
-[ext_resource type="Script" path="res://actors/villager/villager.gd" id="1_6ngkl"]
-[ext_resource type="Texture2D" uid="uid://xmxywddgqd5t" path="res://assets/sprites/villagers/normal/villager_down.png" id="2_7xt0v"]
-[ext_resource type="PackedScene" uid="uid://b2xr0fnxcf0y8" path="res://actors/bobber_3d.tscn" id="3_do24q"]
+[ext_resource type="Script" path="res://actors/villager/villager.gd" id="1_kxt4g"]
+[ext_resource type="Texture2D" uid="uid://lube2pdly25h" path="res://assets/sprites/villagers/ranged/villager_down.png" id="2_odp1h"]
+[ext_resource type="PackedScene" uid="uid://b2xr0fnxcf0y8" path="res://actors/bobber_3d.tscn" id="3_66inf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qn5ys"]
 height = 1.5
@@ -10,7 +10,8 @@ height = 1.5
 [node name="Villager" type="CharacterBody3D" groups=["villager"]]
 collision_layer = 2
 collision_mask = 3
-script = ExtResource("1_6ngkl")
+script = ExtResource("1_kxt4g")
+type = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["villager"]]
 shape = SubResource("CapsuleShape3D_qn5ys")
@@ -19,13 +20,13 @@ shape = SubResource("CapsuleShape3D_qn5ys")
 pixel_size = 0.03
 billboard = 1
 texture_filter = 0
-texture = ExtResource("2_7xt0v")
+texture = ExtResource("2_odp1h")
 
 [node name="StateTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
 
-[node name="Bobber3D" parent="." node_paths=PackedStringArray("sprite", "physics_body") instance=ExtResource("3_do24q")]
+[node name="Bobber3D" parent="." node_paths=PackedStringArray("sprite", "physics_body") instance=ExtResource("3_66inf")]
 wait_time = 0.2
 sprite = NodePath("../Sprite3D")
 physics_body = NodePath("..")

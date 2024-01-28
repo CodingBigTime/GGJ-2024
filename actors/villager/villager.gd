@@ -4,22 +4,41 @@ extends CharacterBody3D
 signal died(villager: Villager)
 
 enum State { IDLE, WANDER, FLEE, ATTACK }
+enum Type { NORMAL, RANGED, HEAVY }
 
 const WANDER_SPEED = 2.0
 const FLEE_SPEED = 3.0
 const FLEE_DISTANCE = 5.0
 const DESPAWN_DISTANCE = 18.0
 
-const TEXTURES = {
-	"normal_up": preload("res://assets/sprites/villagers/villager_up.png"),
-	"normal_down": preload("res://assets/sprites/villagers/villager_down.png"),
-	"left_normal": preload("res://assets/sprites/villagers/villager_left.png"),
-	"right_normal": preload("res://assets/sprites/villagers/villager_right.png"),
-	"left_up": preload("res://assets/sprites/villagers/villager_up_left.png"),
-	"right_up": preload("res://assets/sprites/villagers/villager_up_right.png"),
-	"left_down": preload("res://assets/sprites/villagers/villager_down_left.png"),
-	"right_down": preload("res://assets/sprites/villagers/villager_down_right.png"),
+const TEXTURES_NORMAL = {
+	"normal_up": preload("res://assets/sprites/villagers/normal/villager_up.png"),
+	"normal_down": preload("res://assets/sprites/villagers/normal/villager_down.png"),
+	"left_normal": preload("res://assets/sprites/villagers/normal/villager_left.png"),
+	"right_normal": preload("res://assets/sprites/villagers/normal/villager_right.png"),
+	"left_up": preload("res://assets/sprites/villagers/normal/villager_up_left.png"),
+	"right_up": preload("res://assets/sprites/villagers/normal/villager_up_right.png"),
+	"left_down": preload("res://assets/sprites/villagers/normal/villager_down_left.png"),
+	"right_down": preload("res://assets/sprites/villagers/normal/villager_down_right.png"),
 }
+
+const TEXTURES_RANGED = {
+	"normal_up": preload("res://assets/sprites/villagers/ranged/villager_up.png"),
+	"normal_down": preload("res://assets/sprites/villagers/ranged/villager_down.png"),
+	"left_normal": preload("res://assets/sprites/villagers/ranged/villager_left.png"),
+	"right_normal": preload("res://assets/sprites/villagers/ranged/villager_right.png"),
+	"left_up": preload("res://assets/sprites/villagers/ranged/villager_up_left.png"),
+	"right_up": preload("res://assets/sprites/villagers/ranged/villager_up_right.png"),
+	"left_down": preload("res://assets/sprites/villagers/ranged/villager_down_left.png"),
+	"right_down": preload("res://assets/sprites/villagers/ranged/villager_down_right.png"),
+}
+
+const TEXTURES = {
+	Type.NORMAL: TEXTURES_NORMAL,
+	Type.RANGED: TEXTURES_RANGED,
+}
+
+@export var type: Type = Type.NORMAL
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -48,7 +67,9 @@ func _physics_process(delta: float):
 
 
 func _process(_delta: float):
-	$Sprite3D.texture = TEXTURES[ActorUtils.get_movement_string(Vector2(velocity.x, velocity.z))]
+	$Sprite3D.texture = TEXTURES[self.type][ActorUtils.get_movement_string(
+		Vector2(velocity.x, velocity.z)
+	)]
 
 
 func set_state(new_state: State):

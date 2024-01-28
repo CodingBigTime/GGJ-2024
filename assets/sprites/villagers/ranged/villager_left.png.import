@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csd00mlx8kg2a"
-path="res://.godot/imported/villager_down_right.png-930ebea7590560d1127683ba9340a35a.ctex"
+uid="uid://csy5ic735a5fh"
+path="res://.godot/imported/villager_left.png-6b366b2bf10258ad70a65f1570a16bf2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/villagers/villager_down_right.png"
-dest_files=["res://.godot/imported/villager_down_right.png-930ebea7590560d1127683ba9340a35a.ctex"]
+source_file="res://assets/sprites/villagers/ranged/villager_left.png"
+dest_files=["res://.godot/imported/villager_left.png-6b366b2bf10258ad70a65f1570a16bf2.ctex"]
 
 [params]
 
