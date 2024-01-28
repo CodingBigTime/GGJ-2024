@@ -26,7 +26,7 @@ shape = SubResource("CapsuleShape3D_qn5ys")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-offset = Vector2(0, 16)
+offset = Vector2(0, 24)
 pixel_size = 0.06
 billboard = 1
 shaded = true
