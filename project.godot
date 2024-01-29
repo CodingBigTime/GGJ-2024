@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="global-game-jam-2024-CBT-laughing-stock"
+config/name="Laughing Stock"
 run/main_scene="res://scenes/ui/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
 
 [autoload]
 
