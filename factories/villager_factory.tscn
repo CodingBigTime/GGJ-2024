@@ -4,7 +4,7 @@
 
 [sub_resource type="Curve3D" id="Curve3D_iqwqg"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -15, 0, -15, 0, 0, 0, 0, 0, 0, -15, 0, 15, 0, 0, 0, 0, 0, 0, 15, 0, 15, 0, 0, 0, 0, 0, 0, 15, 0, -15, 0, 0, 0, 0, 0, 0, -15, 0, -15),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -20, 0, -15, 0, 0, 0, 0, 0, 0, -20, 0, 15, 0, 0, 0, 0, 0, 0, 20, 0, 15, 0, 0, 0, 0, 0, 0, 20, 0, -15, 0, 0, 0, 0, 0, 0, -20, 0, -15),
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0)
 }
 point_count = 5
@@ -20,6 +20,6 @@ autostart = true
 curve = SubResource("Curve3D_iqwqg")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -15, 0, -15)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -20, 0, -15)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

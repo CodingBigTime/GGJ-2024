@@ -32,6 +32,6 @@ far = 50.0
 script = ExtResource("2_hrcrx")
 follow_target = NodePath("../DevilClown")
 
-[node name="main_ui" parent="." instance=ExtResource("7_3cel7")]
+[node name="MainHud" parent="." instance=ExtResource("7_3cel7")]
 
 [node name="World" parent="." instance=ExtResource("6_vvr3l")]

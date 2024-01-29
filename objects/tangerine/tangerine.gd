@@ -1,7 +1,7 @@
 class_name Tangerine
 extends RigidBody3D
 
-const MAX_BOUNCES: int = 5
+const MAX_BOUNCES: int = 7
 const PLAYER_DAMAGE: float = 5
 var bounces: int = 0
 

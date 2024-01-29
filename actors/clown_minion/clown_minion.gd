@@ -24,9 +24,17 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var player_position := Vector3.ZERO
 var current_target: Villager = null
 var state: State = State.IDLE
+var enraged: bool = false
 
 @onready var current_state_timer: Timer = $StateTimer
 @onready var debug_label: Label3D = $DebugLabel3D
+@onready var sprite: Sprite3D = $Sprite3D
+
+
+func speed_multiplier():
+	if self.enraged:
+		return 1.25
+	return 1.0
 
 
 func _update_player_pos(player_pos: Vector3):
@@ -35,6 +43,8 @@ func _update_player_pos(player_pos: Vector3):
 
 func _ready():
 	current_state_timer.timeout.connect(_on_current_state_timer_timeout)
+	if self.enraged:
+		self.sprite.modulate = Color(1, 0.5, 0.5)
 
 
 func _physics_process(delta: float):
@@ -62,22 +72,22 @@ func set_state(new_state: State):
 		[State.FOLLOW, ..]:
 			# Move away from the player
 			var direction = (self.player_position - self.position).normalized()
-			self.velocity = direction * self.FOLLOW_SPEED
+			self.velocity = direction * self.FOLLOW_SPEED * self.speed_multiplier()
 		[State.WANDER, State.WANDER]:
 			# Continue moving in the same direction, update speed
 			var direction = self.velocity.normalized()
-			self.velocity = direction * WANDER_SPEED
+			self.velocity = direction * WANDER_SPEED * self.speed_multiplier()
 		[State.WANDER, ..]:
 			# Choose a new random direction
 			var random_angle = randf_range(0, 2 * PI)
 			var direction = Vector3(cos(random_angle), 0, sin(random_angle))
-			self.velocity = direction * WANDER_SPEED
+			self.velocity = direction * WANDER_SPEED * self.speed_multiplier()
 		[State.ATTACK, ..]:
 			# Move towards the target
 			if is_instance_valid(self.current_target):
 				var direction = self.current_target.position - self.position
 				direction = direction.normalized()
-				self.velocity = direction * self.ATTACK_SPEED
+				self.velocity = direction * self.ATTACK_SPEED * self.speed_multiplier()
 			else:
 				self.set_state(State.IDLE)
 		[State.CONVERT, ..]:

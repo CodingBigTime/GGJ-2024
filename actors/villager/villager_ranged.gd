@@ -8,7 +8,10 @@ const TANGERINE_THROW_IMPULSE: float = 6
 
 func _attack():
 	var tangerine := TANGERINE_SCENE.instantiate()
-	var direction_vector: Vector3 = (self.player_position - self.position).normalized()
+	var direction_vector: Vector3 = (
+		((self.player_position - self.position).normalized() + Vector3(0, 0.5, 0)).normalized()
+	)
+
 	tangerine.position = self.position
 	tangerine.apply_central_impulse(direction_vector * TANGERINE_THROW_IMPULSE)
 	self.throw_tangerine.emit(tangerine)

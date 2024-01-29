@@ -7,6 +7,7 @@ enum State { IDLE, WANDER, FLEE, CHASE, ATTACK }
 enum Type { NORMAL, RANGED, HEAVY }
 
 const CAN_ATTACK_TYPES = [Type.RANGED, Type.HEAVY]
+const MARKED_SPEED_MULTIPLIER := 0.8
 
 const TEXTURES_NORMAL = {
 	"normal_up": preload("res://assets/sprites/villagers/normal/villager_up.png"),
@@ -53,7 +54,7 @@ const TEXTURES = {
 @export var chase_speed := 4.0
 @export var flee_distance = 5.0
 @export var attack_distance = 10.0
-@export var despawn_distance = 18.0
+@export var despawn_distance = 22.0
 @export var chase_distance := 10.0
 @export var health: int = 1
 
@@ -98,6 +99,12 @@ func _process(_delta: float):
 	self.update_texture()
 
 
+func speed_multiplier():
+	if marked_for_attack:
+		return MARKED_SPEED_MULTIPLIER
+	return 1.0
+
+
 func _attack():
 	printerr("Normal villagers can't attack!")
 
@@ -112,22 +119,22 @@ func set_state(new_state: State):
 		[State.WANDER, State.WANDER]:
 			# Continue moving in the same direction, update speed
 			var direction = self.velocity.normalized()
-			self.velocity = direction * self.wander_speed
+			self.velocity = direction * self.wander_speed * self.speed_multiplier()
 		[State.WANDER, ..]:
 			# Choose a new random direction
 			var random_angle = randf_range(0, 2 * PI)
 			var direction = Vector3(cos(random_angle), 0, sin(random_angle))
-			self.velocity = direction * self.wander_speed
+			self.velocity = direction * self.wander_speed * self.speed_multiplier()
 		[State.FLEE, ..]:
 			# Move away from the player
 			var direction = self.position - player_position
 			direction = direction.normalized()
-			self.velocity = direction * self.flee_speed
+			self.velocity = direction * self.flee_speed * self.speed_multiplier()
 		[State.CHASE, ..]:
 			# Move towards the player
 			var direction = player_position - self.position
 			direction = direction.normalized()
-			self.velocity = direction * self.chase_speed
+			self.velocity = direction * self.chase_speed * self.speed_multiplier()
 		[State.ATTACK, ..]:
 			_attack()
 			self.velocity = Vector3.ZERO

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4ftvdhvmupjf"]
+
+[ext_resource type="Texture2D" uid="uid://c4nyrc03w267i" path="res://assets/ui/cursor.png" id="1_qklpb"]
+
+[node name="AimCursor" type="CenterContainer"]
+offset_right = 36.0
+offset_bottom = 36.0
+scale = Vector2(2, 2)
+use_top_left = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_qklpb")

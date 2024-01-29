@@ -1,3 +1,4 @@
+class_name DevilClown
 extends CharacterBody3D
 
 signal died
@@ -5,6 +6,13 @@ signal position_updated(position: Vector3)
 signal throw_water_balloon(water_balloon: WaterBalloon)
 signal hit_cymbals(cymbals_aoe: CymbalsAoe)
 signal power_change(new_power: float)
+signal cursor_update(coordinates: Vector2)
+signal input_method_update(input_method: InputMethod)
+
+enum InputMethod {
+	MOUSE,
+	CONTROLLER,
+}
 
 const SPEED := 5.0
 const WATER_BALLOON_THROW_OFFSET := Vector3.ZERO
@@ -17,12 +25,50 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var water_balloon_scene = preload("res://objects/water_balloon/water_balloon.tscn")
 var cymbals_aoe_scene = preload("res://objects/cymbals/cymbals_aoe.tscn")
 var power: float = 20
+var last_cursor_position: Vector2 = Vector2.ZERO
+var last_mouse_poision: Vector2 = Vector2.ZERO
+var last_controller_position: Vector2 = Vector2.ZERO
+
+
+func get_mouse_position() -> Vector2:
+	return get_viewport().get_mouse_position()
+
+
+func mouse_moved() -> bool:
+	return self.last_mouse_poision != self.get_mouse_position()
+
+
+func _get_scaled_viewport_size() -> Vector2:
+	var viewport_transform: Transform2D = get_viewport().get_screen_transform()
+	var viewport_scale: Vector2 = viewport_transform.get_scale()
+	return -viewport_transform.origin / viewport_scale + get_viewport().size * 1.0 / viewport_scale
+
+
+func get_controller_position() -> Vector2:
+	var input_aim = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+	var screen_size = _get_scaled_viewport_size()
+	return screen_size / 2.0 + input_aim * screen_size.y / 2.0
+
+
+func controller_moved() -> bool:
+	return self.last_controller_position != self.get_controller_position()
+
+
+func get_cursor_position() -> Vector2:
+	# Priority mouse > controller > last position
+	if mouse_moved():
+		self.input_method_update.emit(InputMethod.MOUSE)
+		return get_mouse_position()
+	if controller_moved():
+		self.input_method_update.emit(InputMethod.CONTROLLER)
+		return get_controller_position()
+	return self.last_cursor_position
 
 
 func _get_mouse_3d_position():
 	var camera = get_viewport().get_camera_3d()
 	var space_state = get_world_3d().direct_space_state
-	var mouse_pos = get_viewport().get_mouse_position()
+	var mouse_pos = self.get_cursor_position()
 	var ray_origin = camera.project_ray_origin(mouse_pos)
 	var ray_end = ray_origin + camera.project_ray_normal(mouse_pos) * 1000
 	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
@@ -91,6 +137,7 @@ func _physics_process(delta: float):
 	if Input.is_action_just_pressed("toggle_debug"):
 		GlobalState.toggle_debug()
 
+	self.cursor_update.emit(self.get_cursor_position())
 	_handle_abilities()
 
 	var speed := self.SPEED
@@ -113,6 +160,10 @@ func _physics_process(delta: float):
 		velocity.z = move_toward(velocity.z, 0, speed)
 
 	move_and_slide()
+
+	self.last_cursor_position = self.get_cursor_position()
+	self.last_mouse_poision = self.get_mouse_position()
+	self.last_controller_position = self.get_controller_position()
 
 
 func _process(_delta: float):

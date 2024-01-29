@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bikrcjc1lbtdg" path="res://assets/sprites/tangerine.png" id="2_ay61m"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lurnf"]
-bounce = 0.8
+bounce = 0.9
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5fb8j"]
 radius = 0.15

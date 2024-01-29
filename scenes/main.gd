@@ -9,15 +9,21 @@ var death_particles_scene: PackedScene = preload("res://scenes/particles/death_p
 
 @onready var devil_clown = $DevilClown
 @onready var villager_factory = $DevilClown/VillagerFactory
-@onready var score_label = $main_ui/AspectRatioContainer2/ScoreLabel
-@onready var boost_bar = $main_ui/AspectRatioContainer/BoostBar
+@onready var score_label = $MainHud/AspectRatioContainer2/ScoreLabel
+@onready var boost_bar = $MainHud/AspectRatioContainer/BoostBar
+@onready var aim_cursor = $MainHud/AimCursor
+@onready var spell_1_label = $MainHud/Spell1AspectRatioContainer/Label
+@onready var spell_2_label = $MainHud/Spell2AspectRatioContainer/Label
 
 
 func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	self.devil_clown.died.connect(self._go_to_main_menu)
 	self.devil_clown.throw_water_balloon.connect(self._on_player_throw_water_balloon)
 	self.devil_clown.hit_cymbals.connect(self._on_cymbals_hit)
 	self.devil_clown.power_change.connect(self.boost_bar.update_value)
+	self.devil_clown.cursor_update.connect(self._update_aim_cursor)
+	self.devil_clown.input_method_update.connect(self._update_controls_tooltips)
 	self.villager_factory.spawn_villager.connect(self._on_spawn_villager)
 
 
@@ -81,6 +87,8 @@ func _on_villager_died(villager: Villager):
 	# Convert villager to clown minion
 	self.score_label.increase_score(1)
 	var clown_minion: ClownMinion = self.clown_minion_scene.instantiate()
+	if villager.marked_for_attack:
+		clown_minion.enraged = true
 	clown_minion.position = villager.position
 
 	self.devil_clown.position_updated.connect(clown_minion._update_player_pos)
@@ -110,3 +118,19 @@ func _on_clown_minion_died(_clown_minion: ClownMinion):
 	smoke.position = _clown_minion.position
 	smoke.set_one_time()
 	add_child(smoke)
+
+
+func _update_aim_cursor(coordinates: Vector2):
+	self.aim_cursor.position = coordinates
+
+
+func _update_controls_tooltips(input_method: DevilClown.InputMethod):
+	match input_method:
+		DevilClown.InputMethod.MOUSE:
+			self.spell_1_label.text = "Shift / LClick"
+			self.spell_2_label.text = "Space / RClick"
+		DevilClown.InputMethod.CONTROLLER:
+			self.spell_1_label.text = "RTrigger"
+			self.spell_2_label.text = "LTrigger"
+		_:
+			printerr("Unknown input method: ", input_method)
