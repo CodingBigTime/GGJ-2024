@@ -14,15 +14,10 @@ func _ready():
 	$Sprite3D.offset.y = JUNK_OPTIONS[self.junk_type].get_height() / 2.0
 
 	var tween = (
-		get_tree()
-		. create_tween()
-		. set_trans(Tween.TRANS_SINE)
-		. set_ease(Tween.EASE_IN_OUT)
-		. set_loops()
+		self.create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).set_loops()
 	)
 	tween.tween_property($Sprite3D, "pixel_size", 0.015, 1)
 	tween.tween_property($Sprite3D, "pixel_size", 0.025, 1)
-	tween.play()
 
 
 func convert_power():
